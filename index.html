@@ -43,21 +43,44 @@
         <div class="header-divider"></div>
     </header>
 
-<div class="spline">
-    <spline-viewer id="spline" url="https://prod.spline.design/x7N9HO870izAFCqK/scene.splinecode"></spline-viewer>
+<div class="wrapper">
+
+
+        <div class="spline">
+            <spline-viewer id="spline" url="https://prod.spline.design/x7N9HO870izAFCqK/scene.splinecode"></spline-viewer>
+        </div>
+
+        <section class="video" id="video">
+
+            <video autoplay loop width="1920" height="1080">
+                <source src="./videos/NEURON_BACKGROUND_loop.mp4" type="video/mp4">
+            </video>
+
+    </section>
+
+    <div class="parallax">
+        <spline-viewer id="parallax" url="https://prod.spline.design/XI5yOy0rpm1ZVC1H/scene.splinecode"></spline-viewer>
+    </div>
 </div>
-
-<section class="video" id="video">
-
-    <video autoplay loop width="1920" height="1080">
-        <source src="./videos/XYZed-NEURON_BACKGROUND_1920x1080.mp4" type="video/mp4">
-    </video>
-
-</section>
     
 </body>
 
+
 <script type="module" src="https://unpkg.com/@splinetool/viewer@1.10.51/build/spline-viewer.js"></script>
+<script>
+window.addEventListener('scroll', function() {
+    const blurAmount = Math.min(window.scrollY / 100, 1) * 8;
+    const dimAmount = Math.min(window.scrollY / 300, 0.5);
+    const splineViewer = document.querySelector('.spline > spline-viewer');
+    if (splineViewer) {
+        splineViewer.style.filter = `blur(${blurAmount}px)`;
+        splineViewer.style.opacity = '';
+    }
+    const videoSection = document.querySelector('.video');
+    videoSection.style.filter = `blur(${blurAmount}px)`;
+    videoSection.style.opacity = `${1 - dimAmount}`;
+});
+</script>
 
 
 </html>
