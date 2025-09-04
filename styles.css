@@ -1,4 +1,3 @@
-
 * {
     margin: 0;
     padding: 0;
@@ -8,7 +7,7 @@
 }
 
 :root {
-    --bg-color: #1d1d1d;
+    --bg-color: #000000;
 }
 
 body {
@@ -178,9 +177,43 @@ body {
     overflow: hidden;
 }
 
+.video {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 3;
+    overflow: hidden;
+    transition: background 0.5s;
+}
+.video video.fade-out {
+    transition: opacity 0.5s;
+    opacity: 0;
+}
+
+.tagline {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 4;
+    color: #fff;
+    font-size: 5rem;
+    text-align: center;
+    pointer-events: none;
+    width: 100vw;
+    max-width: 90vw;
+    opacity: 0;
+    transition: opacity 0.4s;
+}
+.tagline.visible {
+    opacity: 1;
+}
+
 #parallax {
     position: relative;
-    z-index: 3;
+    z-index: 5;
     background: transparent;
     min-height: 200vh;
     border-radius: 2rem;
@@ -195,4 +228,101 @@ body {
 .spline.blurred,
 .video.blurred {
     filter: blur(8px);
+}
+
+.demo-video {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    z-index: 5;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s;
+    display: block;
+}
+.demo-video.visible {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+#demo-test {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 3;
+  display: none;
+  pointer-events: auto;
+  background: rgba(0,0,0,0.8);
+  transition: opacity 0.5s;
+}
+#demo-test.visible {
+  display: block;
+  opacity: 1;
+}
+#demo-test video {
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+}
+#hideDemoTest {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 2010;
+}
+#showDemoTestBtn {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 3000;
+}
+
+#preloader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #000000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 99999;
+  transition: opacity 0.5s;
+}
+.preloader-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+#preloader video {
+  width: 120px;
+  height: 120px;
+  object-fit: contain;
+}
+#preloader-progress-bar {
+  width: 160px;
+  height: 10px;
+  background: #222;
+  border-radius: 5px;
+  margin-top: 24px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px #0006;
+}
+#preloader-progress {
+  width: 0%;
+  height: 100%;
+  background: linear-gradient(90deg, #ad0000 0%, #fff 100%);
+  border-radius: 5px;
+  transition: width 3s linear;
+}
+#preloader.hide {
+  opacity: 0;
+  pointer-events: none;
 }

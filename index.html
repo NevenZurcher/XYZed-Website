@@ -21,6 +21,14 @@
     }
 </style>
 <body>
+  <div id="preloader">
+    <div class="preloader-content">
+      <video src="videos/loading_logo.mp4" autoplay loop muted playsinline></video>
+      <div id="preloader-progress-bar">
+        <div id="preloader-progress"></div>
+      </div>
+    </div>
+  </div>
     <header class="header">
         <nav class="navbar">
             <div class="navbar-container">
@@ -45,9 +53,11 @@
 
 <div class="wrapper">
 
+    <div class="tagline">Imagination, Brought to Life in XYZ</div>
+
 
         <div class="spline">
-            <spline-viewer id="spline" url="https://prod.spline.design/x7N9HO870izAFCqK/scene.splinecode"></spline-viewer>
+            <spline-viewer loading="eager" loading-anim-type="spinner-big-light" id="spline" url="https://prod.spline.design/x7N9HO870izAFCqK/scene.splinecode"></spline-viewer>
         </div>
 
         <section class="video" id="video">
@@ -55,32 +65,23 @@
             <video autoplay loop width="1920" height="1080">
                 <source src="./videos/NEURON_BACKGROUND_loop.mp4" type="video/mp4">
             </video>
+            <video src="./videos/DEMO_COMING SOON_TEMP.mp4" width="1920" height="1080" class="demo-video" id="demoVideo" tabindex="-1" playsinline muted>
+            </video>
 
     </section>
 
     <div class="parallax">
-        <spline-viewer id="parallax" url="https://prod.spline.design/XI5yOy0rpm1ZVC1H/scene.splinecode"></spline-viewer>
+        <spline-viewer loading="eager" id="parallax" url="https://prod.spline.design/XI5yOy0rpm1ZVC1H/scene.splinecode"></spline-viewer>
     </div>
 </div>
-    
+<section id="demo-test">
+  <video src="./videos/DEMO_COMING SOON_TEMP.mp4" width="1920" height="1080" autoplay loop muted></video>
+</section>
 </body>
 
 
 <script type="module" src="https://unpkg.com/@splinetool/viewer@1.10.51/build/spline-viewer.js"></script>
-<script>
-window.addEventListener('scroll', function() {
-    const blurAmount = Math.min(window.scrollY / 100, 1) * 8;
-    const dimAmount = Math.min(window.scrollY / 300, 0.5);
-    const splineViewer = document.querySelector('.spline > spline-viewer');
-    if (splineViewer) {
-        splineViewer.style.filter = `blur(${blurAmount}px)`;
-        splineViewer.style.opacity = '';
-    }
-    const videoSection = document.querySelector('.video');
-    videoSection.style.filter = `blur(${blurAmount}px)`;
-    videoSection.style.opacity = `${1 - dimAmount}`;
-});
-</script>
+<script src="./main.js"></script>
 
 
 </html>
