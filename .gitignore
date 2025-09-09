@@ -1,1 +1,26 @@
+# Node modules should never be in the build branch
 node_modules/
+
+# Source files (in case accidentally copied)
+src/
+*.js
+*.css
+*.ts
+*.scss
+
+# Config files
+package.json
+package-lock.json
+vite.config.js
+
+# IDE / OS files
+.DS_Store
+Thumbs.db
+*.log
+
+# Temporary files
+*.tmp
+*.bak
+
+# Dist folder (ignore if you ever have nested builds)
+dist/
