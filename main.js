@@ -1,3 +1,21 @@
+// Hide navbar on scroll down, show on scroll up
+let lastScrollTop = 0;
+const navbar = document.querySelector('.header');
+window.addEventListener('scroll', function() {
+  let st = window.pageYOffset || document.documentElement.scrollTop;
+  if (navbar) {
+    if (st > lastScrollTop && st > 50) {
+      // Scroll down
+      navbar.style.transform = 'translateY(-160px)'; // Move further up to hide logo and divider
+      navbar.style.transition = 'transform 0.3s';
+    } else {
+      // Scroll up
+      navbar.style.transform = 'translateY(0)';
+      navbar.style.transition = 'transform 0.3s';
+    }
+    lastScrollTop = st <= 0 ? 0 : st;
+  }
+});
 window.addEventListener('scroll', function() {
     const tagline = document.querySelector('.tagline');
     if (window.scrollY > 100) {

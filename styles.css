@@ -1,3 +1,4 @@
+
 * {
     margin: 0;
     padding: 0;
@@ -269,18 +270,7 @@ body {
   height: 100vh;
   object-fit: cover;
 }
-#hideDemoTest {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  z-index: 2010;
-}
-#showDemoTestBtn {
-  position: fixed;
-  top: 20px;
-  left: 20px;
-  z-index: 3000;
-}
+
 
 #preloader {
   position: fixed;
@@ -325,4 +315,20 @@ body {
 #preloader.hide {
   opacity: 0;
   pointer-events: none;
+}
+
+/* Animated loading text */
+.preloader-loading-text {
+    text-align: center;
+    color: white;
+    font-size: 1rem;
+    margin-top: 1rem;
+    font-family: 'CustomFont', sans-serif;
+    animation: loadingFade 1.2s infinite;
+}
+
+@keyframes loadingFade {
+    0% { opacity: 1; }
+    50% { opacity: 0.3; }
+    100% { opacity: 1; }
 }
