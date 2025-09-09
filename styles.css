@@ -166,6 +166,16 @@ body {
     overflow: visible;
 }
 
+#spline-canvas {
+    position: fixed;
+    top: 5rem;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 2; /* below header and video overlay */
+    overflow: visible;
+}
+
 #video {
     margin: 0;
     width: 100vw;

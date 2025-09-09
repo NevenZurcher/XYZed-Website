@@ -58,8 +58,8 @@
     <div class="tagline">Imagination, Brought to Life in XYZ</div>
 
 
-        <div class="spline">
-            <spline-viewer loading="eager" loading-anim-type="spinner-big-light" id="spline" url="https://prod.spline.design/x7N9HO870izAFCqK/scene.splinecode"></spline-viewer>
+        <div class="spline" id="spline-container">
+          <canvas id="spline-canvas"></canvas>
         </div>
 
         <section class="video" id="video">
@@ -83,7 +83,7 @@
 
 
 <script type="module" src="https://unpkg.com/@splinetool/viewer@1.10.51/build/spline-viewer.js"></script>
-<script src="./main.js"></script>
+<script type="module" src="./main.js"></script>
 
 
 </html>
