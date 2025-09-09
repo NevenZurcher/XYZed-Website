@@ -1,3 +1,26 @@
+// Prevent reload and show demo video when Demo Reel is clicked
+document.addEventListener('DOMContentLoaded', function() {
+  const demoReelLink = document.querySelector('.navbar-menu a[href="#splineAction"]');
+  if (demoReelLink) {
+    demoReelLink.addEventListener('click', function(e) {
+      e.preventDefault();
+      // Show demo video overlay
+      const demoTest = document.getElementById('demo-test');
+      const video = document.querySelector('.video video');
+      if (demoTest && video) {
+        video.classList.add('fade-out');
+        setTimeout(() => {
+          setTimeout(() => {
+            demoTest.style.display = 'block';
+            const vid = demoTest.querySelector('video');
+            if (vid) vid.play();
+            video.style.display = 'none';
+          }, 250);
+        }, 500);
+      }
+    });
+  }
+});
 // Hide navbar on scroll down, show on scroll up
 let lastScrollTop = 0;
 const navbar = document.querySelector('.header');
