@@ -21,6 +21,31 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 });
+
+const spline = document.getElementById('spline');
+
+if (spline) {
+  spline.addEventListener('message', (event) => {
+    // Make sure it's a URL navigation message
+    if (event.data.url && event.data.url.endsWith('#splineAction')) {
+      event.preventDefault?.(); // safety (some browsers support)
+      
+      // Reuse your existing "show demo video" logic
+      const video = document.querySelector('.video video');
+      const demoTest = document.getElementById('demo-test');
+      if (video && demoTest) {
+        video.classList.add('fade-out');
+        setTimeout(() => {
+          demoTest.style.display = 'block';
+          const vid = demoTest.querySelector('video');
+          if (vid) vid.play();
+          video.style.display = 'none';
+        }, 500);
+      }
+    }
+  });
+}
+
 // Hide navbar on scroll down, show on scroll up
 let lastScrollTop = 0;
 const navbar = document.querySelector('.header');
