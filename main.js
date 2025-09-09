@@ -1,4 +1,5 @@
 import { Application } from '@splinetool/runtime';
+import './styles.css';
 
 // Get canvas
 const canvas = document.getElementById('spline-canvas');
