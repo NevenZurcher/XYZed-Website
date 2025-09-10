@@ -9,9 +9,7 @@ src/
 *.scss
 
 # Config files
-package.json
 package-lock.json
-vite.config.js
 
 # IDE / OS files
 .DS_Store
