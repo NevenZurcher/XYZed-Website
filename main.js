@@ -1,3 +1,59 @@
+import { Application } from '@splinetool/runtime';
+
+// Get canvas
+const canvas = document.getElementById('spline-canvas');
+
+// Create Spline app
+const spline = new Application(canvas);
+
+// Load your exported Spline scene
+spline
+      .load('https://prod.spline.design/x7N9HO870izAFCqK/scene.splinecode')
+      .then(() => {
+          spline.addEventListener('mouseDown', (e) => {
+                  if (e.target.name === 'MyButton') {
+                        const demoTest = document.getElementById('demo-test');
+                        const video = document.querySelector('.video video');
+                        if (demoTest && video) {
+                          video.classList.add('fade-out');
+                          setTimeout(() => {
+                            setTimeout(() => {
+                              demoTest.style.display = 'block';
+                              const vid = demoTest.querySelector('video');
+                              if (vid) vid.play();
+                              video.style.display = 'none';
+                            }, 250);
+                        }, 500);
+                  }
+                }
+            });
+        });
+
+
+// Prevent reload and show demo video when Demo Reel is clicked
+document.addEventListener('DOMContentLoaded', function() {
+  const demoReelLink = document.querySelector('.navbar-menu a[href="#splineAction"]');
+  if (demoReelLink) {
+    demoReelLink.addEventListener('click', function(e) {
+      e.preventDefault();
+      // Show demo video overlay
+      const demoTest = document.getElementById('demo-test');
+      const video = document.querySelector('.video video');
+      if (demoTest && video) {
+        video.classList.add('fade-out');
+        setTimeout(() => {
+          setTimeout(() => {
+            demoTest.style.display = 'block';
+            const vid = demoTest.querySelector('video');
+            if (vid) vid.play();
+            video.style.display = 'none';
+          }, 250);
+        }, 500);
+      }
+    });
+  }
+});
+
 // Hide navbar on scroll down, show on scroll up
 let lastScrollTop = 0;
 const navbar = document.querySelector('.header');
@@ -25,10 +81,10 @@ window.addEventListener('scroll', function() {
     }
     const blurAmount = Math.min(window.scrollY / 100, 1) * 8;
     const dimAmount = Math.min(window.scrollY / 300, 0.5);
-    const splineViewer = document.querySelector('.spline > spline-viewer');
-    if (splineViewer) {
-        splineViewer.style.filter = `blur(${blurAmount}px)`;
-        splineViewer.style.opacity = '';
+    const splineCanvas = document.getElementById('spline-canvas');
+    if (splineCanvas) {
+        splineCanvas.style.filter = `blur(${blurAmount}px)`;
+        splineCanvas.style.opacity = '';
     }
     const videoSection = document.querySelector('.video');
     videoSection.style.filter = `blur(${blurAmount}px)`;
