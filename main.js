@@ -37,6 +37,7 @@ document.addEventListener('DOMContentLoaded', function() {
     demoReelLink.addEventListener('click', function(e) {
       e.preventDefault();
       // Show demo video overlay
+      document.querySelector('#home').scrollIntoView({ behavior: 'smooth' });
       const demoTest = document.getElementById('demo-test');
       const video = document.querySelector('.video video');
       if (demoTest && video) {
@@ -184,4 +185,67 @@ window.addEventListener('DOMContentLoaded', function() {
             document.body.style.overflow = '';
         }
     }, 3000);
+});
+
+// Image carousel for services section
+document.addEventListener("DOMContentLoaded", () => {
+  const track = document.querySelector(".carousel-track");
+  const slides = Array.from(track.children);
+  const prevBtn = document.querySelector(".prev");
+  const nextBtn = document.querySelector(".next");
+
+  const visibleSlides = 2;
+  const totalSlides = slides.length;
+
+  // Clone first & last slides for seamless looping
+  slides.slice(0, visibleSlides).forEach(slide => {
+    track.appendChild(slide.cloneNode(true));
+  });
+  slides.slice(-visibleSlides).forEach(slide => {
+    track.insertBefore(slide.cloneNode(true), track.firstChild);
+  });
+
+  const allSlides = Array.from(track.children);
+  let currentIndex = visibleSlides; // start at first real slide
+  let isTransitioning = false;
+
+  function updateCarousel(animate = true) {
+    const slideWidth = allSlides[0].getBoundingClientRect().width;
+    track.style.transition = animate ? "transform 0.5s ease" : "none";
+    track.style.transform = `translateX(-${currentIndex * slideWidth}px)`;
+  }
+
+  function handleTransitionEnd() {
+    isTransitioning = false;
+    if (currentIndex >= totalSlides + visibleSlides) {
+      // Jump back to start (real first slide)
+      currentIndex = visibleSlides;
+      updateCarousel(false);
+    } else if (currentIndex < visibleSlides) {
+      // Jump to end (real last slide)
+      currentIndex = totalSlides + visibleSlides - 1;
+      updateCarousel(false);
+    }
+  }
+
+  nextBtn.addEventListener("click", () => {
+    if (!isTransitioning) {
+      isTransitioning = true;
+      currentIndex++;
+      updateCarousel();
+    }
+  });
+
+  prevBtn.addEventListener("click", () => {
+    if (!isTransitioning) {
+      isTransitioning = true;
+      currentIndex--;
+      updateCarousel();
+    }
+  });
+
+  track.addEventListener("transitionend", handleTransitionEnd);
+
+  // Initialize position
+  updateCarousel(false);
 });

@@ -14,6 +14,7 @@
 body {
     background-color: var(--bg-color);
 }
+
 .header{
     position: fixed;
     width: 100%;
@@ -41,7 +42,7 @@ body {
     z-index: 1200;
 }
 
-.navbar a{
+.navbar-menu a{
     color: #fff;
     text-decoration: none;
     font-size: 1.2rem;
@@ -59,6 +60,7 @@ body {
     color: #fff;
     background: #ad0000;
     border: 2px solid #fff;
+    padding: 0.3rem 0.8rem;
 }
 
 .navbar-container {
@@ -66,12 +68,67 @@ body {
     justify-content: space-between;
     width: 100%;
     max-width: 1600px;
+    margin: 0 auto;
+    position: relative;
 }
 
 .navbar-menu {
     list-style: none;
     display: flex;
     gap: 1.5rem;
+}
+
+.navbar-side {
+    margin-left: auto;
+    margin-right: 4rem;
+    display: flex;
+    
+}
+
+.navbar-side-menu {
+    list-style: none;
+    display: flex;
+    gap: .5rem;
+    padding: 0;
+    margin: 0;
+    
+}
+
+.navbar-side-menu li {
+    margin: 0;
+}
+
+.navbar-side-menu a {
+    margin: 0;   
+    padding: 0.3rem 0.5rem; 
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.2rem;
+    transition: color 0.7s ease;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.contact-link {
+    background: #ad0000;
+    border: 2px solid #fff;
+    border-radius: 8px;
+    padding: 0.3rem 0.8rem;
+    transition: all 0.3s ease;
+}
+
+.shop-link {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.2rem;
+    transition: color 0.7s ease;
+    margin: 1rem;
+    padding: 0.5rem;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    border: 2px solid transparent;
 }
 
 .navbar-bar-bg {
@@ -128,6 +185,7 @@ body {
     background: transparent;
     transition: background 0.2s, box-shadow 0.2s;
     font-size: 2rem;
+    text-decoration: none;
 }
 .navbar-social-slant .social-icon img {
     display: none;
@@ -176,11 +234,31 @@ body {
     overflow: visible;
 }
 
+#spline-canvas,
+
+#spline {
+    z-index: 2;
+}
+
+.tagline {
+    position: fixed;
+    z-index: 4;
+}
+
+.parallax {
+    position: relative;
+    z-index: 5;
+}
+
+.services {
+    position: relative;
+    z-index: 10;
+}
 
 #video {
     margin: 0;
     width: 100vw;
-    height: 100vh;
+    height: 120vh;
     object-fit: cover;
     z-index: 1;
     position: sticky;
@@ -194,14 +272,30 @@ body {
     top: 0;
     left: 0;
     width: 100vw;
-    height: 100vh;
-    z-index: 3;
+    height: 120vh;
+    z-index: 1;
     overflow: hidden;
+    object-fit: cover;
     transition: background 0.5s;
 }
 .video video.fade-out {
     transition: opacity 0.5s;
     opacity: 0;
+}
+
+.video video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.video video,
+.demo-video,
+#demo-test video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 .tagline {
@@ -223,14 +317,96 @@ body {
     opacity: 1;
 }
 
-#parallax {
+.parallax {
     position: relative;
     z-index: 5;
-    background: transparent;
-    min-height: 200vh;
+    width: 100%;    
+    min-height: 100vh;
     border-radius: 2rem;
     overflow: hidden;
-    background: #fff;
+    margin-top: 0;
+}
+
+.services {
+  position: relative;
+  z-index: 20;
+  background: #111;
+  color: #fff;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 4rem 2rem;
+}
+
+.services h2 {
+  margin-bottom: 2rem;
+  font-size: 2.5rem;
+}
+
+.carousel {
+  position: relative;
+  width: 100%;       
+  max-width: 2160px; 
+  aspect-ratio: 3 / 1; 
+  overflow: hidden;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.carousel img {
+  flex: 0 0 50%; 
+  width: 50%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.carousel-track {
+  display: flex;
+  transition: transform 0.5s ease;
+}
+
+.carousel button {
+  background: rgba(255,255,255,0.2);
+  border: none;
+  border-radius: 2rem;
+  color: #fff;
+  font-size: 2rem;
+  padding: 0 .9rem .2rem .9rem;
+  cursor: pointer;
+  transition: background 0.3s;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+}
+
+.carousel button:hover {
+  background: rgba(255,255,255,0.5);
+}
+
+.carousel .prev {
+  left: 10px;
+}
+
+.carousel .next {
+  right: 10px;
+}
+
+.contact {
+    position: relative;
+    z-index: 20;
+    background: #2e2e2e;
+    color: #fff;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 4rem 2rem;
 }
 
 .spline,

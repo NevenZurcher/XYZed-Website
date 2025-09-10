@@ -37,23 +37,31 @@
                 <div class="navbar-bar-bg">
                     <ul class="navbar-menu">
                         <li><a href="#home">Home</a></li>
-                        <li><a href="#about">About Us</a></li>
-                        <li><a href="#work">Services</a></li>
-                        <li><a href="#shop">Shop</a></li>
-                        <li><a href="#contact">Contact Us</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#services">Services</a></li>
+                        <li><a href="#process">Process</a></li>
                         <li><a href="#splineAction">Demo Reel</a></li>
                     </ul>
+
+                    <div class="navbar-side">
+                      <ul class="navbar-side-menu">
+                        <li><a href="#shop" class="shop-link">Shop</a></li>
+                        <li><a href="#contact" class="contact-link">Contact</a></li>
+                      </ul>
+                    </div>
                     <div class="navbar-social-slant">
                         <a href="#" target="_blank" class="social-icon"><i class="bxl bx-youtube"></i></a>
                         <a href="#" target="_blank" class="social-icon"><i class="bxl bx-instagram"></i></a>
                         <a href="#" target="_blank" class="social-icon"><i class="bxl bx-twitter-x"></i></a>
                     </div>
+
+                </div>
             </div>
         </nav>
         <div class="header-divider"></div>
     </header>
 
-<div class="wrapper">
+<div class="wrapper" id="home">
 
     <div class="tagline">Imagination, Brought to Life in XYZ</div>
 
@@ -64,27 +72,51 @@
 
         <section class="video" id="video">
 
-            <video autoplay loop width="1920" height="1080">
+            <video autoplay loop>
                 <source src="./videos/NEURON_BACKGROUND_loop.mp4" type="video/mp4">
             </video>
-            <video controls src="./videos/DEMO_COMING SOON_TEMP.mp4" width="1920" height="1080" class="demo-video" id="demoVideo" playsinline muted>
+            <video controls src="./videos/DEMO_COMING SOON_TEMP.mp4" class="demo-video" id="demoVideo" playsinline muted>
             </video>
 
     </section>
 
-    <div class="parallax">
-        <spline-viewer loading="eager" id="parallax" url="https://prod.spline.design/XI5yOy0rpm1ZVC1H/scene.splinecode"></spline-viewer>
-    </div>
-</div>
-<section id="demo-test">
-  <video src="./videos/DEMO_COMING SOON_TEMP.mp4" width="1920" height="1080" autoplay loop muted controls></video>
-</section>
+    <section id="demo-test">
+      <video src="./videos/DEMO_COMING SOON_TEMP.mp4" autoplay loop muted controls></video>
+    </section>
 
-<section class="services">
-  <div class="service-container">
-    <h2>Services</h2>
+
+    <div class="scroll-container">
+      <div class="parallax" id="about">
+        <spline-viewer loading="eager" id="parallax" url="https://prod.spline.design/XI5yOy0rpm1ZVC1H/scene.splinecode"></spline-viewer>
+      </div>
+
+      <section class="services" id="services">
+        <div class="service-container">
+          <h2>Services</h2>
+            <div class="carousel">
+              <button class="prev">&#10094;</button>
+              <div class="carousel-track">
+                <img src="https://placehold.co/1080x720" alt="Image 1">
+                <img src="https://placehold.co/1080x720/0000FF/FFFFFF" alt="Image 2">
+                <img src="https://placehold.co/1080x720/FF0000/FFFFFF" alt="Image 3">
+                <img src="https://placehold.co/1080x720/00FF00/000000" alt="Image 4">
+              </div>
+              <button class="next">&#10095;</button>
+            </div>
+        </div>
+      </section>
+    </div>
+    
+</div>
+
+<section class="contact">
+  <div class="contact-container">
+    <h2>Contact</h2>
   </div>
 </section>
+
+
+
 </body>
 
 
