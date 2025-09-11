@@ -249,3 +249,77 @@ document.addEventListener("DOMContentLoaded", () => {
   // Initialize position
   updateCarousel(false);
 });
+
+const hamburger = document.querySelector('.hamburger');
+const mobileMenu = document.querySelector('.mobile-menu');
+const mobileLinks = document.querySelectorAll('.mobile-menu a');
+
+// Hamburger toggle
+hamburger.addEventListener('click', () => {
+    mobileMenu.classList.toggle('active');
+    hamburger.classList.toggle('open');
+});
+
+// Mobile link clicks
+mobileLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+        const hash = link.getAttribute('href');
+
+        // Close mobile menu
+        mobileMenu.classList.remove('active');
+        hamburger.classList.remove('open');
+
+        // Home link resets demo/video
+        if (hash === '#home') {
+            e.preventDefault();
+            // Reset hash
+            history.replaceState(null, '', ' ');
+            // Hide demo overlay and restore background video
+            const demoTest = document.getElementById('demo-test');
+            const demoVid = demoTest?.querySelector('video');
+            if (demoTest) demoTest.style.display = 'none';
+            if (demoVid) {
+                demoVid.pause();
+                demoVid.currentTime = 0;
+            }
+            const bgVideo = document.querySelector('.video video');
+            if (bgVideo) {
+                bgVideo.style.display = '';
+                bgVideo.classList.remove('fade-out');
+            }
+            // Scroll to top smoothly
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            return; // stop further handling
+        }
+
+        // Handle spline/demo overlay link
+        if (hash === '#splineAction') {
+            e.preventDefault();
+            const demoTest = document.getElementById('demo-test');
+            const video = document.querySelector('.video video');
+
+            if (demoTest && video) {
+                video.classList.add('fade-out');
+                setTimeout(() => {
+                    setTimeout(() => {
+                        demoTest.style.display = 'block';
+                        const vid = demoTest.querySelector('video');
+                        if (vid) vid.play();
+                        video.style.display = 'none';
+                    }, 250);
+                }, 500);
+            }
+
+            // Optional: scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            return;
+        }
+
+        // Smooth scroll for other anchor links
+        if (hash && hash.startsWith('#')) {
+            e.preventDefault();
+            const target = document.querySelector(hash);
+            if (target) target.scrollIntoView({ behavior: 'smooth' });
+        }
+    });
+});
