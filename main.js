@@ -166,10 +166,68 @@ if (homeLink) {
   });
 }
 
+// Smooth scroll to contact and account for fixed header height
+document.addEventListener('click', function(e) {
+  const el = e.target.closest && e.target.closest('a[href="#contact"]');
+  if (!el) return;
+  e.preventDefault();
+  const contact = document.querySelector('#contact');
+  if (!contact) return;
+  // header height (fallback to 80px)
+  const header = document.querySelector('.header');
+  const headerHeight = header ? header.getBoundingClientRect().height : 80;
+  // extra gap so the contact content sits further down (in px)
+  const extraGap = 60;
+  // Prefer scrolling to the Contact heading so its margin doesn't create
+  // an apparent gap. Fallback to the section offsetTop when heading is
+  // missing.
+  const heading = contact.querySelector('h2') || contact.querySelector('h3') || contact;
+  // Use getBoundingClientRect + pageYOffset for a document-accurate position
+  const baseTop = heading.getBoundingClientRect().top + window.pageYOffset;
+  const top = Math.max(0, Math.round(baseTop - headerHeight - 8));
+
+  // Delay the scroll a short moment to allow earlier click handlers to run
+  // and then override with our precise position. Two retries increase
+  // reliability across browsers and other site scripts.
+  setTimeout(() => { window.scrollTo({ top, behavior: 'smooth' }); }, 60);
+  setTimeout(() => { window.scrollTo({ top, behavior: 'smooth' }); }, 260);
+});
+
 window.addEventListener('DOMContentLoaded', function() {
     const preloader = document.getElementById('preloader');
     const progress = document.getElementById('preloader-progress');
     document.body.style.overflow = 'hidden';
+    // Start loading the About spline during the preloader so it finishes
+    // loading while the preloader is visible.
+    try {
+      initAboutSpline();
+    } catch (e) {
+      // initAboutSpline may not be defined yet if the function hasn't been
+      // parsed; wrap defensively.
+      console.warn('initAboutSpline not available yet, will load later');
+    }
+    // Also eagerly trigger load/prefetch for the Contact spline-viewer so
+    // its scene downloads while the preloader is visible.
+    try {
+      const contactViewer = document.querySelector('.contact-container spline-viewer');
+      if (contactViewer) {
+        const url = contactViewer.getAttribute('url');
+        // If the web-component exposes a load() method, call it. Otherwise
+        // reassign the attribute and do a fetch to warm the cache.
+        if (typeof contactViewer.load === 'function') {
+          try { contactViewer.load(url); } catch (err) { console.warn('contactViewer.load failed', err); }
+        } else if (url) {
+          // Re-assign attribute to nudge the component to load
+          contactViewer.setAttribute('url', url);
+          // Try a lightweight fetch to warm cache (best-effort)
+          fetch(url, { method: 'GET', mode: 'cors', cache: 'force-cache' })
+            .then(() => console.log('Prefetched contact spline'))
+            .catch(() => {});
+        }
+      }
+    } catch (err) {
+      console.warn('Error while preloading contact spline', err);
+    }
     if (progress) {
         progress.style.width = '0%';
         progress.style.width = '100%';
@@ -322,4 +380,197 @@ mobileLinks.forEach(link => {
             if (target) target.scrollIntoView({ behavior: 'smooth' });
         }
     });
+});
+
+// -------------------------
+// About section runtime (lazy-init)
+// -------------------------
+let aboutSplineApp = null;
+let aboutSplineLoaded = false;
+
+/**
+ * Initialize the About spline app. If `force` is true, a new Application
+ * instance will be created (useful for recovering event handlers).
+ */
+function initAboutSpline(force = false) {
+  const aboutCanvas = document.getElementById('about-spline-canvas');
+  if (!aboutCanvas) return;
+  if (aboutSplineLoaded && !force) return;
+
+  // If forcing, clear the previous reference so we create a fresh app.
+  if (force && aboutSplineApp) {
+    try { safeCall(aboutSplineApp, ['destroy','dispose','unload']); } catch (e) {}
+    aboutSplineApp = null;
+    aboutSplineLoaded = false;
+  }
+
+  aboutSplineApp = new Application(aboutCanvas);
+  aboutSplineApp
+    .load('https://prod.spline.design/XI5yOy0rpm1ZVC1H/scene.splinecode')
+    .then(() => {
+      aboutSplineLoaded = true;
+      // Add any about-scene-specific interactivity here
+      // e.g. aboutSplineApp.addEventListener('mouseDown', (e) => { ... })
+    })
+    .catch((err) => {
+      console.error('Failed to load about spline scene:', err);
+    });
+}
+// Note: We intentionally start loading the About spline during the preloader
+// so it downloads while the page shows its loading screen. The init function
+// will safely no-op if called multiple times.
+
+// -------------------------
+// Performance: pause/resume offscreen spline content
+// -------------------------
+function safeCall(obj, names) {
+  for (const n of names) {
+    if (obj && typeof obj[n] === 'function') {
+      try { obj[n](); return true; } catch (e) { /* ignore */ }
+    }
+  }
+  return false;
+}
+
+function pauseAppAndCanvas(app, canvas) {
+  try {
+    // Try common pause/stop methods on the runtime
+    if (!safeCall(app, ['pause','stop'])) {
+      // If the runtime doesn't expose a pause API, avoid hiding the
+      // canvas because that can break Spline's internal hit-testing
+      // and trigger zones. Leave the canvas visible and rely on the
+      // browser to reduce work (or consider a future DPR clamp).
+      console.debug('pauseAppAndCanvas: no pause API available for app, leaving canvas visible');
+    }
+  } catch (e) { /* ignore */ }
+}
+
+function resumeAppAndCanvas(app, canvas) {
+  try {
+    // Ensure canvas is visible first
+    if (canvas) canvas.style.display = 'block';
+    // Try common resume/play methods
+    return safeCall(app, ['play','resume']);
+  } catch (e) { /* ignore */ }
+  return false;
+}
+
+function pauseViewer(viewer) {
+  try {
+    if (!safeCall(viewer, ['pause','stop'])) {
+      if (viewer) viewer.style.visibility = 'hidden';
+    }
+  } catch (e) { /* ignore */ }
+}
+
+function resumeViewer(viewer) {
+  try {
+    if (viewer) viewer.style.visibility = 'visible';
+    safeCall(viewer, ['play','resume']);
+  } catch (e) { /* ignore */ }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  try {
+    const homeEl = document.getElementById('home');
+    const aboutEl = document.getElementById('about');
+    const contactEl = document.querySelector('.contact');
+    const homeCanvas = document.getElementById('spline-canvas');
+    const aboutCanvas = document.getElementById('about-spline-canvas');
+    const contactViewer = document.querySelector('.contact-container spline-viewer');
+
+    if (!homeEl) return;
+
+    let current = null;
+    const observer = new IntersectionObserver((entries) => {
+      const vis = {};
+      entries.forEach(en => {
+        const id = en.target.id || (en.target.classList && en.target.classList.contains('contact') ? 'contact' : null);
+        if (id) vis[id] = en.intersectionRatio;
+      });
+
+      // choose the most visible section
+      const candidates = ['home','about','contact'];
+      let winner = null, best = -1;
+      for (const c of candidates) {
+        const v = vis[c] || 0;
+        if (v > best) { best = v; winner = c; }
+      }
+      if (!winner || winner === current) return;
+      current = winner;
+
+      // Pause others, resume winner
+      if (winner === 'home') {
+        // Keep About active; only ensure Home is resumed and Contact paused.
+        resumeAppAndCanvas(spline, homeCanvas);
+        pauseViewer(contactViewer);
+      } else if (winner === 'about') {
+        // Ensure About is initialized (but do not pause it).
+        if (!aboutSplineLoaded) initAboutSpline();
+        // We don't pause About to avoid breaking trigger zones.
+        pauseViewer(contactViewer);
+        pauseAppAndCanvas(spline, homeCanvas);
+      } else if (winner === 'contact') {
+        resumeViewer(contactViewer);
+        pauseAppAndCanvas(spline, homeCanvas);
+        // Do not pause About; leave it running
+      }
+    }, { threshold: [0, 0.25, 0.5, 0.75, 1] });
+
+    observer.observe(homeEl);
+    if (aboutEl) observer.observe(aboutEl);
+    if (contactEl) observer.observe(contactEl);
+  } catch (err) {
+    console.warn('Failed to initialize spline visibility manager', err);
+  }
+});
+
+// -------------------------
+// Contact form handling
+// -------------------------
+document.addEventListener('DOMContentLoaded', function() {
+  const contactForm = document.getElementById('contact-form');
+  if (!contactForm) return;
+
+  function showError(inputEl, msg) {
+    const el = contactForm.querySelector(`.error-msg[data-for="${inputEl.id}"]`);
+    if (el) el.textContent = msg || '';
+  }
+
+  function validateEmail(email) {
+    return /\S+@\S+\.\S+/.test(email);
+  }
+
+  contactForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+  const email = document.getElementById('email');
+  const message = document.getElementById('message');
+
+    let ok = true;
+  // basic validation (email + message only)
+  if (!email.value.trim() || !validateEmail(email.value.trim())) { showError(email, 'Please enter a valid email'); ok = false; } else { showError(email, ''); }
+  if (!message.value.trim()) { showError(message, 'Please enter a message'); ok = false; } else { showError(message, ''); }
+
+    if (!ok) return;
+
+    // Simulate submit (replace with real fetch to your backend endpoint)
+    const successEl = document.getElementById('contact-success');
+    contactForm.querySelector('.btn-submit').disabled = true;
+    contactForm.querySelector('.btn-submit').textContent = 'Sending...';
+
+    setTimeout(() => {
+      // Clear form and show success
+      contactForm.reset();
+      contactForm.querySelector('.btn-submit').disabled = false;
+      contactForm.querySelector('.btn-submit').textContent = 'Send';
+      if (successEl) {
+        successEl.hidden = false;
+        setTimeout(() => { successEl.hidden = true; }, 5000);
+      }
+      console.log('Contact form submitted (simulated):', {
+        email: email.value,
+        message: message.value
+      });
+    }, 900);
+  });
 });

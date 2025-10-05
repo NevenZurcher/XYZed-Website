@@ -5,7 +5,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@splinetool/runtime": "^1.10.57",
-    "vite": "^7.1.5"
+    "@splinetool/runtime": "^1.10.74",
+    "vite": "^7.1.9"
   }
 }

@@ -432,6 +432,208 @@ body {
     opacity: 1;
 }
 
+/* About section: make it a full-page section that scrolls over Home
+   This is intentionally scoped to #about and its children so other
+   sections (Home, Services, etc.) are unaffected. */
+#about {
+    position: relative !important;
+    width: 100% !important;
+    height: 100vh !important;    /* full viewport height */
+    min-height: 100vh !important;
+    overflow: hidden !important;
+    display: block !important;
+    z-index: 50 !important;      /* sit above Home content */
+}
+
+#about .spline,
+#about #about-spline-container {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+}
+
+#about-spline-canvas {
+    width: 100% !important;
+    height: 100% !important;
+    display: block !important;
+    object-fit: cover !important; /* fill while preserving aspect (may crop) */
+}
+
+/* Keep any other parallax children (text/cards) positioned on top if needed */
+#about .parallax-content {
+    position: relative;
+    z-index: 60;
+}
+
+/* Contact section: reserve space for the spline viewer to avoid layout jumps */
+.contact-container {
+    position: relative;
+    min-height: 60vh; /* reserve most of the viewport but not full-screen */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.contact-container spline-viewer {
+    display: block;
+    width: 100%;
+    height: 100%;
+    min-height: 300px;
+}
+
+/* Fullscreen Contact: make the contact section fill the viewport and the
+   spline-viewer cover it. These rules intentionally override the earlier
+   min-height so the Contact page becomes a full-screen section. */
+.contact {
+    position: relative;
+    width: 100%;
+    height: 100vh !important;
+    min-height: 100vh !important;
+    overflow: hidden;
+}
+
+.contact-container {
+    width: 100%;
+    height: 100%;
+    min-height: 100%;
+    display: block; /* we'll position children explicitly */
+}
+
+.contact-container spline-viewer {
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    z-index: 1 !important;
+}
+
+/* Keep the heading and any UI above the viewer */
+.contact-container > h2 {
+    position: relative;
+    z-index: 2;
+    color: #fff;
+    margin: 1.5rem 2rem;
+}
+
+/* Contact overlay form placed on the right side of the contact section */
+.contact-form {
+    position: absolute;
+    right: 3rem; /* slightly closer to the edge so the form extends more to the left */
+    top: 38%;
+    transform: translateY(-55%);
+    width: 880px; /* doubled width so the form extends further left */
+    max-width: calc(100vw - 48px);
+    background: rgba(6,6,6,0.75);
+    border: 1px solid rgba(255,255,255,0.06);
+    padding: 1.25rem;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+    z-index: 3; /* above the spline viewer */
+    color: #fff;
+    backdrop-filter: blur(6px);
+}
+
+.contact-form .field-row {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 0.85rem;
+}
+
+.contact-form-header h3 {
+    margin: 0 0 0.75rem 0;
+    color: #fff;
+    font-size: 1.25rem;
+    letter-spacing: 0.2px;
+}
+
+/* Contact overlay form placed on the right side of the contact section */
+.contact-form {
+    position: absolute;
+    right: 3rem; /* slightly closer to the edge so the form extends more to the left */
+    top: 38%;
+    transform: translateY(-55%);
+    width: 880px; /* doubled width so the form extends further left */
+    max-width: calc(100vw - 48px);
+    background: rgba(6,6,6,0.75);
+    border: 1px solid rgba(255,255,255,0.06);
+    padding: 1.25rem;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+    z-index: 3; /* above the spline viewer */
+    color: #fff;
+    backdrop-filter: blur(6px);
+}
+
+.contact-form label {
+    font-size: 0.85rem;
+    margin-bottom: 0.35rem;
+    color: #ddd;
+}
+
+.contact-form input,
+.contact-form textarea {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.06);
+    color: #fff;
+    padding: 0.6rem 0.75rem;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    outline: none;
+}
+
+.contact-form input::placeholder,
+.contact-form textarea::placeholder {
+    color: rgba(255,255,255,0.5);
+}
+
+.contact-form textarea { resize: vertical; }
+
+.contact-form .error-msg {
+    color: #ffb3b3;
+    font-size: 0.8rem;
+    min-height: 1rem;
+    margin-top: 0.35rem;
+}
+
+.contact-form .form-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 0.5rem;
+}
+
+.btn-submit {
+    background: linear-gradient(90deg,#ad0000,#ff6b6b);
+    border: none;
+    color: #fff;
+    padding: 0.6rem 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.contact-success {
+    margin-top: 0.75rem;
+    color: #b6ffb6;
+    font-size: 0.95rem;
+}
+
+@media (max-width: 900px) {
+    .contact-form {
+        position: relative;
+        right: auto;
+        top: auto;
+        transform: none;
+        width: 90%;
+        margin: 1rem auto 2rem auto;
+    }
+}
+
+/* If you want the header to remain visible above the contact viewer
+   (recommended), header already has z-index:1000 so it will stay on top. */
+
 .parallax {
     position: relative;
     z-index: 5;
@@ -467,6 +669,46 @@ body {
 .services h2 {
   margin-bottom: 2rem;
   font-size: 2.5rem;
+}
+
+/* Process placeholder styles */
+.process {
+    /* opaque gradient background and elevated stacking so it covers
+       fixed background video and other fixed elements (spline, tagline) */
+    position: relative;
+    z-index: 10; /* above header (1000), spline (2), tagline (4) */
+    background: linear-gradient(180deg, #081018 0%, #10121a 50%, #0b0b0b 100%);
+    background-color: #081018; /* solid fallback */
+    color: #fff;
+    padding: 6rem 2rem;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-size: cover;
+}
+.process-container {
+    max-width: 1200px;
+    width: 100%;
+    text-align: center;
+    z-index: 10;
+}
+.process-sub {
+    color: #ccc;
+    margin-bottom: 2rem;
+}
+.process-steps {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+.process-steps .step {
+    background: #222;
+    padding: 1rem 1.25rem;
+    border-radius: 8px;
+    color: #fff;
+    min-width: 140px;
 }
 
 .carousel {
@@ -530,7 +772,8 @@ body {
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    padding: 4rem 2rem;
+    /* remove outer padding so full-bleed spline/contact viewer can reach the viewport edges */
+    padding: 0;
 }
 
 @media (max-width: 768px) {
