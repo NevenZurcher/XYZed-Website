@@ -12,14 +12,23 @@
       href="https://cdn.boxicons.com/fonts/brands/boxicons-brands.min.css"
       rel="stylesheet"
     />
+  
+    <link rel="icon" type="image/png" sizes="32x32" href="./assets/XYZED_LOGO_NO%20XYZed%20text-_stwqwRy.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./assets/XYZED_LOGO_NO%20XYZed%20text-_stwqwRy.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="./assets/XYZED_LOGO_NO%20XYZed%20text-_stwqwRy.png">
+    <meta name="theme-color" content="#000000">
     <script type="module" src="https://unpkg.com/@splinetool/viewer@1.10.74/build/spline-viewer.js"></script>
-  <script type="module" crossorigin src="./assets/index-JupnEfHU.js"></script>
-  <link rel="stylesheet" crossorigin href="./assets/index-CIMm29C1.css">
+  <script type="module" crossorigin src="./assets/index-Dyc3t6yg.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-Ch5B-JNz.css">
 </head>
 <style>
     @font-face {
-        font-family: 'CustomFont';
-        src: url(./assets/AvenirNextLTPro-Regular-DMEwNicO.otf);
+        font-family: 'BebasNeue';
+        src: url(./assets/BebasNeue-Regular-D2CONTwO.ttf) format('truetype');
+    }
+    @font-face {
+        font-family: 'BrandonText';
+        src: url(./fonts/NEW/BrandonText-Regular.ttf) format('truetype');
     }
 </style>
 <body>
@@ -35,7 +44,7 @@
     <header class="header">
         <nav class="navbar">
             <div class="navbar-container">
-                <img src="./assets/logo%20with%20alphaL-qtxAFtV0.png" href="#home" class="navbar-logo">
+                <a href="#home" class="navbar-logo-link"><img src="./assets/logo%20with%20alphaL-qtxAFtV0.png" class="navbar-logo" alt="XYZed logo"></a>
                 <div class="hamburger">
                     <span></span>
                     <span></span>
@@ -113,30 +122,33 @@
 
       <section class="services" id="services">
         <div class="service-container">
-          <h2>Services</h2>
+          <img src="./assets/SERVICES_BKG-C-1xgwbN.png" alt="" class="services-bkg">
             <div class="carousel">
               <button class="prev">&#10094;</button>
               <div class="carousel-track">
-                <img src="https://placehold.co/1080x720" alt="Image 1">
-                <img src="https://placehold.co/1080x720/0000FF/FFFFFF" alt="Image 2">
-                <img src="https://placehold.co/1080x720/FF0000/FFFFFF" alt="Image 3">
-                <img src="https://placehold.co/1080x720/00FF00/000000" alt="Image 4">
+                <img src="./assets/MEDICAL_ANIMATION-DadxJqO0.png" alt="Image 1">
+                <img src="./assets/CHARACTER_ANIMATION-B_DSw7Ef.png" alt="Image 2">
+                <img src="./assets/MOTION_GRAPHICS-ggu2izBr.png" alt="Image 3">
+                <img src="./assets/3D_ILLUSTRATION-D8AIildW.png" alt="Image 4">
+                <img src="./assets/PRODUCT_ANIMATION-SIncGt8R.png" alt="Image 5">
+                <img src="./assets/VFX-Ie2ZDkQm.png" alt="Image 6">
               </div>
               <button class="next">&#10095;</button>
             </div>
         </div>
       </section>
       
-      <!-- Placeholder Process page -->
       <section class="process" id="process">
         <div class="process-container">
           <h2>Our Process</h2>
-          <p class="process-sub">This is a placeholder page for the Process section. Replace with real content later.</p>
-          <div class="process-steps">
-            <div class="step">1. Discover</div>
-            <div class="step">2. Design</div>
-            <div class="step">3. Build</div>
-            <div class="step">4. Deliver</div>
+          <p class="process-sub"></p>
+          <div class="process-steps" role="tablist" aria-label="Process phases">
+            <button class="step" data-phase="pre" role="tab" aria-selected="true">1. Pre-Production</button>
+            <button class="step" data-phase="prod" role="tab" aria-selected="false">2. Production</button>
+            <button class="step" data-phase="post" role="tab" aria-selected="false">3. Post-Production</button>
+          </div>
+          <div class="process-detail" id="process-detail" role="region" aria-live="polite">
+
           </div>
         </div>
       </section>
@@ -146,10 +158,8 @@
 
 <section class="contact" id="contact">
   <div class="contact-container">
-    <h2>Contact</h2>
+    <h2>Contact Us</h2>
 
-      <!-- Right-side overlay contact form (sits above the spline viewer) -->
-      <!-- Right-side overlay contact form (sits above the spline viewer) -->
       <form id="contact-form" class="contact-form" novalidate aria-labelledby="contact-heading">
         <div class="contact-form-header">
           <h3 id="contact-heading">Contact Us</h3>
@@ -175,8 +185,7 @@
         </div>
       </form>
 
-      <!-- Spline viewer for Contact section -->
-      <spline-viewer url="https://prod.spline.design/y04DJ5-mS3am3TDm/scene.splinecode"></spline-viewer>
+      <spline-viewer loading="eager" url="https://prod.spline.design/y04DJ5-mS3am3TDm/scene.splinecode"></spline-viewer>
     </div>
   </section>
 
@@ -186,3 +195,25 @@
 
 
 </html>
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <img src="./assets/XYZED_LOGO_NO%20XYZed%20text-_stwqwRy.png" alt="XYZed" class="footer-logo">
+        <p class="footer-tag">Imagination, brought to life.</p>
+      </div>
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#services">Services</a>
+        <a href="#process">Process</a>
+        <a href="#contact">Contact</a>
+        <a href="#FAQ">FAQ</a>
+      </nav>
+      <div class="footer-social">
+        <a href="#" aria-label="YouTube"><i class="bxl bx-youtube"></i></a>
+        <a href="#" aria-label="Instagram"><i class="bxl bx-instagram"></i></a>
+        <a href="#" aria-label="Twitter"><i class="bxl bx-twitter-x"></i></a>
+      </div>
+    </div>
+    <div class="footer-copyright">© <span id="year"></span> XYZed. All rights reserved.</div>
+  </footer>
