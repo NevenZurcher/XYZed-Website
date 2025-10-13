@@ -1,10 +1,27 @@
 
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    scroll-behavior: smooth;
-    font-family: "BebasNeue";
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        scroll-behavior: smooth;
+        font-family: "BebasNeue";
+}
+
+/* Local font declarations */
+@font-face {
+    font-family: 'BebasNeue';
+    src: url('./fonts/NEW/BebasNeue-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'BrandonText';
+    src: url('./fonts/NEW/BrandonText-Regular.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
 }
 
 :root {
@@ -35,12 +52,14 @@ body {
         margin: 0 !important;
         transform: translateX(-3rem) translateY(-10px)!important;
         position: fixed;
-        left: 4.5rem;
+        left: 1rem;
+        top: 0.3rem;
     }
 
     #spline, #spline-canvas {
-        transform: scale(0.8);
+        
         transform-origin: top center;
+        transform: translateY(-50px);
     }
 
     .hamburger {
@@ -173,6 +192,29 @@ body {
     background: #ad0000;
     border: 2px solid #fff;
     padding: 0.3rem 0.8rem;
+}
+
+/* Logo-specific: disable hover effects and keep above header */
+.navbar-logo-link {
+    position: relative;
+    z-index: 1300; /* sit above header (1000) and header-divider */
+    display: inline-block;
+}
+.navbar-logo-link img,
+.navbar-logo {
+    display: block;
+    pointer-events: auto;
+    transition: none !important;
+    transform: none !important;
+}
+.navbar-logo-link:hover,
+.navbar-logo-link:focus {
+    background: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+}
+.navbar-logo-link img:hover {
+    transform: none !important;
 }
 
 .navbar-container {
@@ -467,6 +509,302 @@ body {
     z-index: 60;
 }
 
+.parallax {
+    position: relative;
+    z-index: 5;
+    width: 100%;    
+    min-height: auto;
+    border-radius: 2rem;
+    overflow: hidden;
+    margin-top: 0;
+}
+
+.services {
+    position: relative;
+    z-index: 20;
+    background: #111;
+    color: #fff;
+    /* keep the larger visual height you liked */
+    min-height: 120vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+  margin: 0 auto;
+  padding: 4rem 2rem;
+  box-sizing: border-box;
+}
+
+@media (max-width: 1200px) {
+    .services {
+        min-height: auto; /* Keep full height on tablet+ */
+    }
+}
+
+.services-bkg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%; /* match the services container height */
+    object-fit: cover; /* fill while cropping */
+    object-position: left center; /* anchor to left so right side is cropped */
+    z-index: -1; /* behind content */
+}
+
+.services h2 {
+  margin-bottom: 2rem;
+  font-size: 2.5rem;
+}
+
+.carousel {
+    position: relative;
+    width: 100%;       
+    max-width: 2160px; /* original large-screen size */
+    aspect-ratio: 3 / 1; 
+    overflow: hidden;
+    margin: 0 auto;
+    margin-top: -19rem; /* nudge carousel upwards */
+    transition: margin-top 0.25s ease, max-width 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.carousel img {
+    flex: 0 0 50%; 
+    width: 50%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* When viewport is 1200px or narrower show only 1 image */
+@media (max-width: 1200px) {
+    .carousel {
+        aspect-ratio: 4 / 3;
+        max-width: 1400px; /* smaller only under 1200px */
+        max-height: 700px;
+        margin-top: 0;
+    }
+    .carousel img {
+        flex: 0 0 100%;
+        width: 100%;
+    }
+}
+
+.carousel-track {
+  display: flex;
+  transition: transform 0.5s ease;
+}
+
+.carousel button {
+  background: rgba(255,255,255,0.2);
+  border: none;
+  border-radius: 2rem;
+  color: #fff;
+  font-size: 2rem;
+  padding: 0 .9rem .2rem .9rem;
+  cursor: pointer;
+  transition: background 0.3s;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+}
+
+.carousel button:hover {
+  background: rgba(255,255,255,0.5);
+}
+
+.carousel .prev {
+  left: 10px;
+}
+
+.carousel .next {
+  right: 10px;
+}
+
+
+/* Process placeholder styles */
+.process {
+    /* opaque gradient background and elevated stacking so it covers
+       fixed background video and other fixed elements (spline, tagline) */
+    position: relative;
+    z-index: 10; /* above header (1000), spline (2), tagline (4) */
+    background: linear-gradient(180deg, #081018 0%, #10121a 50%, #0b0b0b 100%);
+    background-color: #081018; /* solid fallback */
+    color: #fff;
+    padding: 6rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-size: cover;
+    height: 100vh;
+}
+
+.process h2 {
+    margin-bottom: 1rem;
+    font-size: 3rem;
+    text-align: left;
+    /* remove transform-based positioning (causes off-screen shifting) */
+    transform: none;
+    margin-left: 0;
+}
+
+/* Desktop: position the main process heading top-left inside the section */
+@media (min-width: 1201px) {
+    .process {
+        padding-top: 5rem; /* ensure there's room for absolutely positioned heading */
+    }
+    .process h2 {
+        position: absolute;
+        top: 2.5rem;
+        left: 2.5rem;
+        transform: none;
+        text-align: left;
+        z-index: 5;
+    }
+}
+
+/* Responsive: prevent the title from being pushed off-screen on smaller widths */
+@media (max-width: 1200px) {
+    .process h2 {
+        transform: none !important;
+        text-align: center !important;
+        font-size: clamp(1.6rem, 3.5vw, 2.4rem) !important;
+        margin: 0 1rem 1rem 1rem;
+    }
+    .process {
+        padding: 4rem 1rem;
+        height: auto; /* let content determine height on smaller screens */
+    }
+    /* Prevent the title from overlapping the step buttons on narrower screens */
+    .process-steps {
+        margin-top: 1rem !important; /* reset negative offset */
+        position: static !important; /* disable sticky/absolute behavior */
+        display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: wrap !important;
+        justify-content: center !important;
+        gap: 0.5rem !important;
+    }
+    .process-steps .step {
+        min-width: auto !important;
+        width: auto !important;
+        padding: 0.5rem 0.9rem !important;
+    }
+}
+
+@media (max-width: 600px) {
+    .process h2 {
+        font-size: 1.8rem !important;
+    }
+}
+
+.process span {
+    font-family: 'BebasNeue';
+}
+
+.process ul {
+    font-family: 'BrandonText' !important;
+}
+.process-container {
+    max-width: 1200px;
+    width: 100%;
+    text-align: center;
+    z-index: 10;
+}
+.process-sub {
+    color: #ccc;
+    margin-bottom: 2rem;
+}
+/* Ensure the process title (h3) uses BebasNeue */
+.process-detail h3 {
+    font-family: 'BebasNeue', 'Bebas Neue', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial !important;
+    letter-spacing: 0.06em;
+    font-weight: normal;
+    text-transform: uppercase;
+}
+.process-steps {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: -5rem; /* bring buttons up */
+}
+.process-steps .step {
+    background: transparent;
+    color: #fff;
+    border: 2px solid rgba(255,255,255,0.12);
+    padding: 0.6rem 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-family: inherit;
+    min-width: 140px;
+}
+.process-steps .step.active,
+.process-steps .step[aria-selected="true"] {
+    background: #ad0000;
+    border-color: #fff;
+}
+.process-detail {
+    margin-top: 4rem;
+    color: #ddd;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: left;
+    font-family: 'BrandonText', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+    font-size: 1.5rem;
+}
+
+.process-detail h3 {
+    margin-bottom: 0.5rem;
+    font-size: 2.5rem;
+    text-align: center;
+}
+
+/* Improve side margins for the details around tablet widths (~900px) */
+@media (max-width: 1000px) {
+    .process {
+        padding-left: 2rem;
+        padding-right: 2rem;
+    }
+    .process-detail {
+        max-width: calc(100% - 4rem); /* leave 2rem padding each side */
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+}
+
+@media (max-width: 900px) {
+    .process {
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+    }
+    .process-detail {
+        max-width: calc(100% - 3rem);
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
+        font-size: 1.35rem;
+    }
+}
+
+.process-detail span {
+    font-family: 'BebasNeue', 'Bebas Neue', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+}
+
+/* Force BrandonText for everything in the process detail, but let spans and the h3 title use BebasNeue */
+.process-detail, .process-detail * {
+    font-family: 'BrandonText', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial !important;
+}
+.process-detail span, .process-detail h3 {
+    font-family: 'BebasNeue', 'Bebas Neue', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial !important;
+}
+
 /* Contact section: reserve space for the spline viewer to avoid layout jumps */
 .contact-container {
     position: relative;
@@ -507,7 +845,7 @@ body {
     inset: 0 !important;
     width: 100% !important;
     height: 100% !important;
-    z-index: 1 !important;
+    z-index: 1 !important; /* above footer but below header (header z-index ~1000) */
 }
 
 /* Keep the heading and any UI above the viewer */
@@ -620,159 +958,19 @@ body {
     font-size: 0.95rem;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1200px) {
     .contact-form {
         position: relative;
         right: auto;
-        top: auto;
+        top: 45%;
         transform: none;
         width: 90%;
         margin: 1rem auto 2rem auto;
     }
-}
+    .contact-container > h2 {
+        font-size: 2rem;
 
-/* If you want the header to remain visible above the contact viewer
-   (recommended), header already has z-index:1000 so it will stay on top. */
-
-.parallax {
-    position: relative;
-    z-index: 5;
-    width: 100%;    
-    min-height: auto;
-    border-radius: 2rem;
-    overflow: hidden;
-    margin-top: 0;
-}
-
-.services {
-  position: relative;
-  z-index: 20;
-  background: #111;
-  color: #fff;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  width: 100%;
-  margin: 0 auto;
-  padding: 4rem 2rem;
-  box-sizing: border-box;
-}
-
-@media (max-width: 1200px) {
-    .services {
-        min-height: auto; /* Keep full height on tablet+ */
     }
-}
-
-.services-bkg {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  min-height: 100vh;
-  object-fit: cover;
-  z-index: -1; /* behind content */
-}
-
-.services h2 {
-  margin-bottom: 2rem;
-  font-size: 2.5rem;
-}
-
-.carousel {
-  position: relative;
-  width: 100%;       
-  max-width: 2160px; 
-  aspect-ratio: 3 / 1; 
-  overflow: hidden;
-    margin: auto;
-    margin-top: -8rem; /* nudge carousel upwards */
-    transition: margin-top 0.25s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.carousel img {
-  flex: 0 0 50%; 
-  width: 50%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.carousel-track {
-  display: flex;
-  transition: transform 0.5s ease;
-}
-
-.carousel button {
-  background: rgba(255,255,255,0.2);
-  border: none;
-  border-radius: 2rem;
-  color: #fff;
-  font-size: 2rem;
-  padding: 0 .9rem .2rem .9rem;
-  cursor: pointer;
-  transition: background 0.3s;
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 10;
-}
-
-.carousel button:hover {
-  background: rgba(255,255,255,0.5);
-}
-
-.carousel .prev {
-  left: 10px;
-}
-
-.carousel .next {
-  right: 10px;
-}
-
-
-/* Process placeholder styles */
-.process {
-    /* opaque gradient background and elevated stacking so it covers
-       fixed background video and other fixed elements (spline, tagline) */
-    position: relative;
-    z-index: 10; /* above header (1000), spline (2), tagline (4) */
-    background: linear-gradient(180deg, #081018 0%, #10121a 50%, #0b0b0b 100%);
-    background-color: #081018; /* solid fallback */
-    color: #fff;
-    padding: 6rem 2rem;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-size: cover;
-}
-.process-container {
-    max-width: 1200px;
-    width: 100%;
-    text-align: center;
-    z-index: 10;
-}
-.process-sub {
-    color: #ccc;
-    margin-bottom: 2rem;
-}
-.process-steps {
-    display: flex;
-    gap: 1rem;
-    justify-content: center;
-    flex-wrap: wrap;
-}
-.process-steps .step {
-    background: #222;
-    padding: 1rem 1.25rem;
-    border-radius: 8px;
-    color: #fff;
-    min-width: 140px;
 }
 
 .contact {
@@ -789,15 +987,82 @@ body {
     padding: 0;
 }
 
-@media (max-width: 768px) {
+.contact h2 {
+    font-size: 4rem;
+    text-align: left;
+}
+
+@media (max-width: 900px) {
     .contact {
         min-height: auto; /* Keep full height on tablet+ */
+    }
+    /* Reduce the contact heading on small screens */
+    .contact h2 {
+        font-size: clamp(1.6rem, 4.5vw, 2.4rem);
+        text-align: center;
+        margin: 1rem 1rem 1.5rem 1rem;
     }
 }
 
 .spline,
 .video {
     transition: filter 0.4s;
+}
+
+/* Footer styles */
+.site-footer {
+    /* solid opaque background so underlying spline cannot be seen through */
+    background: linear-gradient(#0c0c0c, #000000);
+    color: #ddd;
+    padding: 2.25rem 1.5rem 1rem 1.5rem;
+    font-size: 0.95rem;
+    margin-top: 0;
+    position: relative;
+    z-index: 99999; /* sit above spline canvas */
+}
+.footer-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr; /* brand | nav | social */
+    align-items: center;
+    gap: 1rem 2rem;
+    align-items: center;
+}
+.footer-brand {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    justify-self: start;
+}
+.footer-logo {
+    height: 36px;
+    width: auto;
+}
+.footer-tag {
+    color: #aaa;
+    font-size: 0.95rem;
+}
+.footer-nav {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    justify-self: center; /* center nav in middle column */
+}
+.footer-nav a {
+    color: #ddd;
+    text-decoration: none;
+    opacity: 0.9;
+}
+.footer-nav a:hover { opacity: 1; }
+.footer-social a { color: #ddd; margin-left: .6rem; font-size: 1.2rem; }
+.footer-social { justify-self: end; }
+.footer-copyright { text-align: center; margin-top: 1rem; color: #777; font-size: 0.85rem; }
+
+@media (max-width: 700px) {
+    .footer-inner { display: flex; flex-direction: column; align-items: center; }
+    .footer-nav { order: 3; margin-top: 1rem; }
+    .footer-social { order: 2; }
 }
 .spline.blurred,
 .video.blurred {

@@ -252,22 +252,35 @@ document.addEventListener("DOMContentLoaded", () => {
   const prevBtn = document.querySelector(".prev");
   const nextBtn = document.querySelector(".next");
 
-  const visibleSlides = 2;
+  // Determine visible slides based on viewport width
+  let visibleSlides = window.innerWidth <= 1200 ? 1 : 2;
   const totalSlides = slides.length;
 
   // Clone first & last slides for seamless looping
-  slides.slice(0, visibleSlides).forEach(slide => {
-    track.appendChild(slide.cloneNode(true));
-  });
-  slides.slice(-visibleSlides).forEach(slide => {
-    track.insertBefore(slide.cloneNode(true), track.firstChild);
-  });
+  function setupClones() {
+    // clear any previous clones (if re-run)
+    Array.from(track.querySelectorAll('.clone')).forEach(c => c.remove());
+    const baseSlides = Array.from(track.children).filter(n => !n.classList.contains('clone'));
+    baseSlides.slice(0, visibleSlides).forEach(slide => {
+      const clone = slide.cloneNode(true);
+      clone.classList.add('clone');
+      track.appendChild(clone);
+    });
+    baseSlides.slice(-visibleSlides).forEach(slide => {
+      const clone = slide.cloneNode(true);
+      clone.classList.add('clone');
+      track.insertBefore(clone, track.firstChild);
+    });
+  }
+  setupClones();
 
-  const allSlides = Array.from(track.children);
+  let allSlides = Array.from(track.children);
   let currentIndex = visibleSlides; // start at first real slide
   let isTransitioning = false;
 
   function updateCarousel(animate = true) {
+    // recalc in case of resize
+    allSlides = Array.from(track.children);
     const slideWidth = allSlides[0].getBoundingClientRect().width;
     track.style.transition = animate ? "transform 0.5s ease" : "none";
     track.style.transform = `translateX(-${currentIndex * slideWidth}px)`;
@@ -306,6 +319,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Initialize position
   updateCarousel(false);
+
+  // Update carousel on resize to switch visibleSlides if needed
+  window.addEventListener('resize', () => {
+    const newVisible = window.innerWidth <= 1200 ? 1 : 2;
+    if (newVisible !== visibleSlides) {
+      visibleSlides = newVisible;
+      // rebuild clones and reset index
+      // remove all clones then re-setup
+      Array.from(track.querySelectorAll('.clone')).forEach(c => c.remove());
+      currentIndex = visibleSlides;
+      setupClones();
+      updateCarousel(false);
+    } else {
+      // just recalc sizes
+      updateCarousel(false);
+    }
+  });
 });
 
 const hamburger = document.querySelector('.hamburger');
@@ -574,3 +604,118 @@ document.addEventListener('DOMContentLoaded', function() {
     }, 900);
   });
 });
+
+// Process steps: swap detail content when step buttons are clicked
+document.addEventListener('DOMContentLoaded', function() {
+  const steps = Array.from(document.querySelectorAll('.process-steps .step'));
+  const detail = document.getElementById('process-detail');
+  if (!steps.length || !detail) return;
+
+  const contents = {
+    pre: {
+      title: 'Pre-Production',
+      body: `
+        <ul>
+          <li><span>Information gathering</span> – We start by getting to know you, your goals and expectations, your audience, and the story you want to tell.</li>
+          <li><span>Research</span> – Once we have a clear understanding of your story, we conduct research to ensure it is told in the most accurate and effective way.</li>
+          <li><span>Scripting</span> – This foundational stage involves working closely with your team to research and write a script that communicates your story clearly and effectively.</li>
+          <li><span>Modeling/texturing and lighting of 3D assets</span> – Once the script is approved, we begin creating the 3D assets needed to visualize your story. At this stage, we provide 3D model sheets for approval of the look and feel of all assets.</li>
+          <li><span>Storyboards and Style Frames</span> – With your models ready, we sketch out the “roadmap” for your animation. Storyboards set the scene, while style frames capture the mood, colors, and cinematic style that will make your story stand out.</li>
+        </ul>
+      `
+    },
+    prod: {
+      title: 'Production',
+      body: `
+        <ul>
+          <li><span>First pass animation</span> – In this phase, your animation begins to take shape. We create a simplified version of the final product to establish timing, pacing, and narrative flow before committing to final rendering.</li>
+          <li><span>Second pass animation</span> – This pass is a half-resolution render with all revisions from the first pass applied, providing a more refined preview of the final deliverable.</li>
+        </ul>
+      `
+          },
+    post: {
+      title: 'Post-Production',
+      body: `
+        <ul>
+          <li><span>Final animation</span> – We refine and complete the details of the animation, adding final textures, lighting, and visual effects.</li>
+          <li><span>Rendering</span> – All necessary layers are rendered for final compositing. This process can involve thousands of individual frames, taking anywhere from one minute to an hour per frame depending on complexity.</li>
+          <li><span>Compositing</span> – During compositing, we enhance the animation with cinematic elements such as depth of field, highlights and glows, color correction, and text overlays. This stage also includes laying in professional sound design, music, and narration.</li>
+          <li><span>Final output</span> – The completed animation is delivered in its final form—typically an HD or 4K master QuickTime ProRes file, along with a compressed H.265 MP4 file for easy distribution.</li>
+        </ul>
+      `
+    }
+  };
+
+  function computeDetailMinHeight() {
+    try {
+      // Create an offscreen measurement container that matches .process-detail
+      const meas = document.createElement('div');
+      meas.style.position = 'absolute';
+      meas.style.visibility = 'hidden';
+      meas.style.left = '-9999px';
+      meas.style.top = '0';
+      // match width so wrapping is measured correctly
+      const detailWidth = getComputedStyle(detail).width || detail.clientWidth + 'px';
+      meas.style.width = detailWidth;
+      // copy classes so font/spacing rules apply
+      meas.className = detail.className;
+      document.body.appendChild(meas);
+
+      let max = 0;
+      for (const k of Object.keys(contents)) {
+        const c = contents[k];
+        meas.innerHTML = `<h3>${c.title}</h3>${c.body}`;
+        // force layout
+        const h = meas.offsetHeight;
+        if (h > max) max = h;
+      }
+      // apply a little breathing room
+      if (max > 0) detail.style.minHeight = (max + 8) + 'px';
+      document.body.removeChild(meas);
+    } catch (err) {
+      // defensive: don't break the page
+      console.warn('computeDetailMinHeight failed', err);
+    }
+  }
+
+  function setActive(phase) {
+    steps.forEach(s => {
+      const is = s.getAttribute('data-phase') === phase;
+      s.classList.toggle('active', is);
+      s.setAttribute('aria-selected', is ? 'true' : 'false');
+    });
+    const c = contents[phase] || contents.pre;
+    // c.body may contain HTML (lists, paragraphs) so insert directly
+    detail.innerHTML = `<h3>${c.title}</h3>${c.body}`;
+  }
+
+  // default
+  // compute min-height before inserting default content so the container
+  // doesn't jump when we set the innerHTML.
+  computeDetailMinHeight();
+  setActive('pre');
+
+  steps.forEach(s => s.addEventListener('click', () => setActive(s.getAttribute('data-phase'))));
+  // Recompute if the viewport width changes (content wrapping may change)
+  let resizeTimer = null;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+      computeDetailMinHeight();
+    }, 120);
+  });
+
+  // Recompute after fonts load to get accurate measurements when webfonts are used
+  if (document.fonts && typeof document.fonts.ready !== 'undefined') {
+    document.fonts.ready.then(() => {
+      computeDetailMinHeight();
+    }).catch(() => {});
+  }
+});
+
+// footer year
+try {
+  const y = new Date().getFullYear();
+  const el = document.getElementById('year');
+  if (el) el.textContent = y;
+} catch (e) {}
