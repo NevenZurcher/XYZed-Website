@@ -195,15 +195,14 @@ body {
 }
 
 /* Logo-specific: disable hover effects and keep above header */
-.navbar-logo-link {
+.navbar-logo {
     position: relative;
     z-index: 1300; /* sit above header (1000) and header-divider */
     display: inline-block;
 }
 .navbar-logo-link img,
 .navbar-logo {
-    display: block;
-    pointer-events: auto;
+    pointer-events: none;
     transition: none !important;
     transform: none !important;
 }
