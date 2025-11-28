@@ -18,7 +18,7 @@
     <link rel="icon" type="image/png" sizes="16x16" href="icons\XYZED_LOGO_NO XYZed text.png">
     <link rel="apple-touch-icon" sizes="180x180" href="icons\XYZED_LOGO_NO XYZed text.png">
     <meta name="theme-color" content="#000000">
-    <script type="module" src="https://unpkg.com/@splinetool/viewer@1.10.74/build/spline-viewer.js"></script>
+    <script type="module" src="https://unpkg.com/@splinetool/viewer@1.12.3/build/spline-viewer.js"></script>
 </head>
 <style>
     @font-face {
@@ -27,13 +27,13 @@
     }
     @font-face {
         font-family: 'BrandonText';
-        src: url(./fonts/NEW/BrandonText-Regular.ttf) format('truetype');
+    src: url(./fonts/NEW/BrandonText-Regular.otf) format('opentype');
     }
 </style>
 <body>
   <div id="preloader">
     <div class="preloader-content">
-      <video src="videos/loading_logo.mp4" autoplay loop muted playsinline></video>
+      <video src="videos/Loading_Logo_150x150.mp4" autoplay loop muted playsinline></video>
       <div id="preloader-progress-bar">
         <div id="preloader-progress"></div>
       </div>
@@ -43,7 +43,7 @@
     <header class="header">
         <nav class="navbar">
             <div class="navbar-container">
-                <a href="#home" class="navbar-logo-link"><img src="icons/logo with alphaL.png" class="navbar-logo" alt="XYZed logo"></a>
+                <a href="#home" class="navbar-logo-link"><img src="icons/XYzed_LOGO_NEW.png" class="navbar-logo" alt="XYZed logo"></a>
                 <div class="hamburger">
                     <span></span>
                     <span></span>
@@ -99,16 +99,16 @@
 
         <section class="video" id="video">
 
-            <video autoplay loop>
-                <source src="./videos/NEURON_BACKGROUND_loop.mp4" type="video/mp4">
-            </video>
-            <video controls src="./videos/DEMO_COMING SOON_TEMP.mp4" class="demo-video" id="demoVideo" playsinline muted>
+            <video autoplay loop muted playsinline preload="auto">
+                <source src="./videos/Neuron_background.mp4" type="video/mp4">
+              </video>
+            <video controls src="./videos/DEMO_COMING%20SOON_TEMP.mp4" class="demo-video" id="demoVideo" playsinline muted>
             </video>
 
     </section>
 
     <section id="demo-test">
-      <video src="./videos/DEMO_COMING SOON_TEMP.mp4" autoplay loop muted controls></video>
+      <video src="./videos/DEMO_COMING%20SOON_TEMP.mp4" autoplay loop muted controls></video>
     </section>
 
 
@@ -151,7 +151,7 @@
           </div>
         </div>
       </section>
-    </div>
+    
     
 </div>
 
@@ -183,8 +183,13 @@
           Thank you — your message was sent.
         </div>
       </form>
-
-      <spline-viewer loading="eager" url="https://prod.spline.design/y04DJ5-mS3am3TDm/scene.splinecode"></spline-viewer>
+      <div class="contact-spline">
+      <spline-viewer url="https://prod.spline.design/ayWBGljxLLoePJKP/scene.splinecode"></spline-viewer>
+      </div>
+      <div class="contact-splash">
+        <p>Every great project starts with a conversation. Whether it’s medical animation, motion graphics, or a bold new idea, we’re here to bring it into another dimension.</p>
+        <p class="contact-splash-cta">Reach out to XYZed — Where stories move across every axis!</p>
+      </div>
     </div>
   </section>
 

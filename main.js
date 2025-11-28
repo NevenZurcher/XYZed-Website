@@ -1,37 +1,65 @@
-import { Application } from '@splinetool/runtime';
+// Load Spline runtime dynamically in the browser (avoids bare specifier errors
+// when serving files without a bundler). Uses the same runtime version as the
+// spline-viewer included in index.html.
+let spline = null;
+let homeSplineLoaded = false;
+let _resolveHomeLoaded = null;
+const homeLoadedPromise = new Promise((res) => { _resolveHomeLoaded = res; });
+(async function initSpline() {
+  try {
+    const mod = await import('https://unpkg.com/@splinetool/runtime@1.10.74/build/runtime.js');
+    const { Application } = mod;
+    const canvas = document.getElementById('spline-canvas');
+    if (!canvas) return; // nothing to mount to
+    spline = new Application(canvas);
+    // expose for debugging
+    window.spline = spline;
 
-// Get canvas
-const canvas = document.getElementById('spline-canvas');
-
-// Create Spline app
-const spline = new Application(canvas);
-
-// Load your exported Spline scene
-spline
-      .load('https://prod.spline.design/x7N9HO870izAFCqK/scene.splinecode')
-      .then(() => {
-          spline.addEventListener('mouseDown', (e) => {
-                  if (e.target.name === 'MyButton') {
-                        const demoTest = document.getElementById('demo-test');
-                        const video = document.querySelector('.video video');
-                        if (demoTest && video) {
-                          video.classList.add('fade-out');
-                          setTimeout(() => {
-                            setTimeout(() => {
-                              demoTest.style.display = 'block';
-                              const vid = demoTest.querySelector('video');
-                              if (vid) vid.play();
-                              video.style.display = 'none';
-                            }, 250);
-                        }, 500);
-                  }
-                }
-            });
-        });
+    await spline.load('https://prod.spline.design/x7N9HO870izAFCqK/scene.splinecode');
+    // mark home spline loaded for preloader logic
+    homeSplineLoaded = true;
+    if (typeof _resolveHomeLoaded === 'function') _resolveHomeLoaded();
+    spline.addEventListener('mouseDown', (e) => {
+      if (e.target && e.target.name === 'MyButton') {
+        const demoTest = document.getElementById('demo-test');
+        const video = document.querySelector('.video video');
+        if (demoTest && video) {
+          video.classList.add('fade-out');
+          setTimeout(() => {
+            setTimeout(() => {
+              demoTest.style.display = 'block';
+              const vid = demoTest.querySelector('video');
+              if (vid) vid.play();
+              video.style.display = 'none';
+            }, 250);
+          }, 500);
+        }
+      }
+    });
+  } catch (err) {
+    console.error('Failed to load Spline runtime or scene', err);
+  }
+})();
 
 
 // Prevent reload and show demo video when Demo Reel is clicked
 document.addEventListener('DOMContentLoaded', function() {
+  // Ensure background video is allowed to autoplay in restrictive browsers
+  try {
+    const bgVideo = document.querySelector('.video video');
+    if (bgVideo) {
+      // Some browsers require the muted property to be set programmatically
+      // before a play() attempt — set it defensively and try to play.
+      bgVideo.muted = true;
+      bgVideo.playsInline = true;
+      bgVideo.setAttribute('muted', '');
+      bgVideo.setAttribute('playsinline', '');
+      // Attempt to play (may return a promise)
+      const p = bgVideo.play();
+      if (p && typeof p.then === 'function') p.catch(() => {});
+    }
+  } catch (e) { /* ignore */ }
+
   const demoReelLink = document.querySelector('.navbar-menu a[href="#splineAction"]');
   if (demoReelLink) {
     demoReelLink.addEventListener('click', function(e) {
@@ -166,6 +194,49 @@ if (homeLink) {
   });
 }
 
+// Ensure clicking the site logo behaves like the Home link (SPA behavior).
+// This covers cases where the logo is not an anchor with href="#home".
+(function attachLogoHomeHandler() {
+  function addLogoListeners() {
+    const selectors = ['.header .logo', '.navbar .logo', '.logo', '.navbar-brand', 'a.logo', '.header a.logo', '.brand'];
+    const nodes = [];
+    selectors.forEach(sel => {
+      try {
+        document.querySelectorAll(sel).forEach(n => nodes.push(n));
+      } catch (e) { /* ignore invalid selectors */ }
+    });
+    // dedupe
+    const unique = Array.from(new Set(nodes));
+    if (!unique.length) return;
+
+    function handleLogoClick(e) {
+      if (e && typeof e.preventDefault === 'function') e.preventDefault();
+      // Match the Home link behavior: reset hash, hide demo overlay, restore bg video, scroll top
+      try { history.replaceState(null, '', ' '); } catch (err) { /* ignore */ }
+      const demoTest = document.getElementById('demo-test');
+      if (demoTest) {
+        demoTest.style.display = 'none';
+        const demoVid = demoTest.querySelector('video');
+        if (demoVid) { demoVid.pause(); demoVid.currentTime = 0; }
+      }
+      const bgVideo = document.querySelector('.video video');
+      if (bgVideo) { bgVideo.style.display = ''; bgVideo.classList.remove('fade-out'); }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    unique.forEach(el => {
+      // Avoid double-binding
+      if (el.__homeHandlerAttached) return;
+      el.addEventListener('click', handleLogoClick);
+      try { el.__homeHandlerAttached = true; } catch (e) { /* ignore */ }
+    });
+  }
+
+  // Try attaching now and also once DOM is ready (covers timing differences)
+  try { addLogoListeners(); } catch (e) { /* ignore */ }
+  document.addEventListener('DOMContentLoaded', addLogoListeners);
+})();
+
 // Smooth scroll to contact and account for fixed header height
 document.addEventListener('click', function(e) {
   const el = e.target.closest && e.target.closest('a[href="#contact"]');
@@ -184,7 +255,9 @@ document.addEventListener('click', function(e) {
   const heading = contact.querySelector('h2') || contact.querySelector('h3') || contact;
   // Use getBoundingClientRect + pageYOffset for a document-accurate position
   const baseTop = heading.getBoundingClientRect().top + window.pageYOffset;
-  const top = Math.max(0, Math.round(baseTop - headerHeight - 8));
+  // Subtract header height and add an extraGap so the section is scrolled
+  // a little further down the page (gives breathing room above the content).
+  const top = Math.max(0, Math.round(baseTop - headerHeight + extraGap));
 
   // Delay the scroll a short moment to allow earlier click handlers to run
   // and then override with our precise position. Two retries increase
@@ -232,17 +305,46 @@ window.addEventListener('DOMContentLoaded', function() {
         progress.style.width = '0%';
         progress.style.width = '100%';
     }
-    setTimeout(function() {
-        if (preloader) {
-            preloader.classList.add('hide');
-            setTimeout(() => {
-                preloader.style.display = 'none';
-                document.body.style.overflow = '';
-            }, 600);
-        } else {
-            document.body.style.overflow = '';
+
+    // Wait for spline assets (home + about + contact prefetch) to finish
+    // before hiding the preloader. Fallback to a timeout to avoid stalling.
+    let contactPromise = Promise.resolve();
+    try {
+      const contactViewer = document.querySelector('.contact-container spline-viewer');
+      if (contactViewer) {
+        const url = contactViewer.getAttribute('url');
+        if (typeof contactViewer.load === 'function') {
+          try {
+            const maybe = contactViewer.load(url);
+            contactPromise = (maybe && typeof maybe.then === 'function') ? maybe : Promise.resolve();
+          } catch (e) { contactPromise = Promise.resolve(); }
+        } else if (url) {
+          // Re-assign attribute to nudge the component to load and warm cache.
+          contactViewer.setAttribute('url', url);
+          contactPromise = fetch(url, { method: 'GET', mode: 'cors', cache: 'force-cache' }).catch(() => {});
         }
-    }, 3000);
+      }
+    } catch (err) {
+      contactPromise = Promise.resolve();
+    }
+
+    const allLoads = Promise.allSettled([homeLoadedPromise, aboutLoadedPromise, contactPromise]);
+    const fallback = new Promise((res) => setTimeout(res, 6000));
+    Promise.race([allLoads, fallback]).then(() => {
+      if (preloader) {
+        preloader.classList.add('hide');
+        setTimeout(() => {
+          preloader.style.display = 'none';
+          document.body.style.overflow = '';
+        }, 600);
+      } else {
+        document.body.style.overflow = '';
+      }
+    }).catch(() => {
+      // ensure the UI is restored even if something goes wrong
+      if (preloader) preloader.style.display = 'none';
+      document.body.style.overflow = '';
+    });
 });
 
 // Image carousel for services section
@@ -405,9 +507,24 @@ mobileLinks.forEach(link => {
 
         // Smooth scroll for other anchor links
         if (hash && hash.startsWith('#')) {
-            e.preventDefault();
+          e.preventDefault();
+          if (hash === '#contact') {
+            // Use the same offset behavior as the desktop contact handler
+            const contact = document.querySelector('#contact');
+            if (contact) {
+              const header = document.querySelector('.header');
+              const headerHeight = header ? header.getBoundingClientRect().height : 80;
+              const extraGap = 60;
+              const heading = contact.querySelector('h2') || contact.querySelector('h3') || contact;
+              const baseTop = heading.getBoundingClientRect().top + window.pageYOffset;
+              const top = Math.max(0, Math.round(baseTop - headerHeight + extraGap));
+              setTimeout(() => { window.scrollTo({ top, behavior: 'smooth' }); }, 60);
+              setTimeout(() => { window.scrollTo({ top, behavior: 'smooth' }); }, 260);
+            }
+          } else {
             const target = document.querySelector(hash);
             if (target) target.scrollIntoView({ behavior: 'smooth' });
+          }
         }
     });
 });
@@ -417,12 +534,14 @@ mobileLinks.forEach(link => {
 // -------------------------
 let aboutSplineApp = null;
 let aboutSplineLoaded = false;
+let _resolveAboutLoaded = null;
+const aboutLoadedPromise = new Promise((res) => { _resolveAboutLoaded = res; });
 
 /**
  * Initialize the About spline app. If `force` is true, a new Application
  * instance will be created (useful for recovering event handlers).
  */
-function initAboutSpline(force = false) {
+async function initAboutSpline(force = false) {
   const aboutCanvas = document.getElementById('about-spline-canvas');
   if (!aboutCanvas) return;
   if (aboutSplineLoaded && !force) return;
@@ -434,17 +553,33 @@ function initAboutSpline(force = false) {
     aboutSplineLoaded = false;
   }
 
-  aboutSplineApp = new Application(aboutCanvas);
-  aboutSplineApp
-    .load('https://prod.spline.design/XI5yOy0rpm1ZVC1H/scene.splinecode')
-    .then(() => {
-      aboutSplineLoaded = true;
-      // Add any about-scene-specific interactivity here
-      // e.g. aboutSplineApp.addEventListener('mouseDown', (e) => { ... })
-    })
-    .catch((err) => {
-      console.error('Failed to load about spline scene:', err);
-    });
+  // Ensure we have an Application constructor available. Prefer a local
+  // binding if present; otherwise dynamically import the runtime.
+  let ApplicationCtor = (typeof Application !== 'undefined') ? Application : null;
+  if (!ApplicationCtor && typeof window !== 'undefined' && window.Application) {
+    ApplicationCtor = window.Application;
+  }
+
+  if (!ApplicationCtor) {
+    try {
+      const mod = await import('https://unpkg.com/@splinetool/runtime@1.10.74/build/runtime.js');
+      ApplicationCtor = mod.Application;
+    } catch (err) {
+      console.error('Failed to load spline runtime for About spline:', err);
+      return;
+    }
+  }
+
+  try {
+    aboutSplineApp = new ApplicationCtor(aboutCanvas);
+    await aboutSplineApp.load('https://prod.spline.design/XI5yOy0rpm1ZVC1H/scene.splinecode');
+    aboutSplineLoaded = true;
+    if (typeof _resolveAboutLoaded === 'function') _resolveAboutLoaded();
+    // Add any about-scene-specific interactivity here
+    // e.g. aboutSplineApp.addEventListener('mouseDown', (e) => { ... })
+  } catch (err) {
+    console.error('Failed to load about spline scene:', err);
+  }
 }
 // Note: We intentionally start loading the About spline during the preloader
 // so it downloads while the page shows its loading screen. The init function
@@ -719,3 +854,11 @@ try {
   const el = document.getElementById('year');
   if (el) el.textContent = y;
 } catch (e) {}
+
+// -------------------------
+// Responsive spline scaling (JS-driven interpolation)
+// Interpolates --spline-scale and --spline-translate between 1200px and 1750px
+// to provide smooth, efficient resizing without lots of media queries.
+// -------------------------
+// Removed JS-driven CSS variables for spline transform/scale per request.
+// Spline sizing now uses static CSS rules and media queries in styles.css.
