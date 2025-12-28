@@ -822,6 +822,14 @@ document.addEventListener('DOMContentLoaded', function() {
     const c = contents[phase] || contents.pre;
     // c.body may contain HTML (lists, paragraphs) so insert directly
     detail.innerHTML = `<h3>${c.title}</h3>${c.body}`;
+    // show only the image that matches the active phase
+    try {
+      const imgs = document.querySelectorAll('.process-images img');
+      imgs.forEach(img => {
+        const match = img.getAttribute('data-phase') === phase;
+        img.style.display = match ? 'block' : 'none';
+      });
+    } catch (e) { /* ignore if images not present */ }
   }
 
   // default
