@@ -18,8 +18,8 @@
     <link rel="apple-touch-icon" sizes="180x180" href="./assets/XYZED_LOGO_NO%20XYZed%20text-_stwqwRy.png">
     <meta name="theme-color" content="#000000">
     <script type="module" src="https://unpkg.com/@splinetool/viewer@1.12.3/build/spline-viewer.js"></script>
-  <script type="module" crossorigin src="./assets/index-DmKfEbBL.js"></script>
-  <link rel="stylesheet" crossorigin href="./assets/index-B8xJXW4o.css">
+  <script type="module" crossorigin src="./assets/index-B5Jy9zBL.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-BCGuCAwZ.css">
 </head>
 <style>
     @font-face {
@@ -122,7 +122,11 @@
 
       <section class="services" id="services">
         <div class="service-container">
-          <img src="./assets/SERVICES_BKG-C-1xgwbN.png" alt="" class="services-bkg">
+          <div class="services-heading">
+            <h2>Our Services</h2>
+          </div>
+          <div class="services-divider"></div>
+          <img src="./assets/SERVICES_BKG_2-roLZUnLW.png" alt="" class="services-bkg">
             <div class="carousel">
               <button class="prev">&#10094;</button>
               <div class="carousel-track">
@@ -135,6 +139,17 @@
               </div>
               <button class="next">&#10095;</button>
             </div>
+            <div class="services-info">
+              <h3>What We Offer :</h3>
+              <ul>
+                <li>Medical Animation <span>— Precise, high-end visuals that simplify complex science and communicate with clarity</span></li>
+                <li>Character Animation <span>— From quirky to realistic, our characters are full of personality</span></li>
+                <li>Motion Graphics <span>— Sleek, dynamic visuals that make any message pop</span></li>
+                <li>VFX <span>— Add the wow-factor with effects that feel larger than life</span></li>
+                <li>Product Animation <span>— Show off your product like it's the star of its own blockbuster</span></li>
+                <li>3D Illustration <span>— Bold, beautiful imagery built to grab attention in print or digital</span></li>
+              </ul>
+            </div>
         </div>
       </section>
       
@@ -146,6 +161,11 @@
             <button class="step" data-phase="pre" role="tab" aria-selected="true">1. Pre-Production</button>
             <button class="step" data-phase="prod" role="tab" aria-selected="false">2. Production</button>
             <button class="step" data-phase="post" role="tab" aria-selected="false">3. Post-Production</button>
+          </div>
+          <div class="process-images" aria-hidden="false">
+            <img data-phase="pre" src="https://placehold.co/600x400?text=Pre-Production" alt="Pre-Production placeholder" />
+            <img data-phase="prod" src="https://placehold.co/600x400?text=Production" alt="Production placeholder" />
+            <img data-phase="post" src="https://placehold.co/600x400?text=Post-Production" alt="Post-Production placeholder" />
           </div>
           <div class="process-detail" id="process-detail" role="region" aria-live="polite">
 
