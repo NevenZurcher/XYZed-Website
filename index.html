@@ -18,8 +18,8 @@
     <link rel="apple-touch-icon" sizes="180x180" href="./assets/XYZED_LOGO_NO%20XYZed%20text-_stwqwRy.png">
     <meta name="theme-color" content="#000000">
     <script type="module" src="https://unpkg.com/@splinetool/viewer@1.12.3/build/spline-viewer.js"></script>
-  <script type="module" crossorigin src="./assets/index-B5Jy9zBL.js"></script>
-  <link rel="stylesheet" crossorigin href="./assets/index-BCGuCAwZ.css">
+  <script type="module" crossorigin src="./assets/index-Bjy-y3nW.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-B5QgRSX1.css">
 </head>
 <style>
     @font-face {
@@ -57,6 +57,7 @@
                     <li><a href="#services">Services</a></li>
                     <li><a href="#process">Process</a></li>
                     <li><a href="#splineAction">Demo Reel</a></li>
+                    <li><a href="#FAQ">FAQ</a></li>
                     <li><a href="#shop">Shop</a></li>
                     <li><a href="#contact">Contact</a></li>
                 </ul>
@@ -73,6 +74,7 @@
                     <div class="navbar-side">
                       <ul class="navbar-side-menu">
                         <li><a href="#shop" class="shop-link">Shop</a></li>
+                        <li><a href="#FAQ" class="faq-link">FAQ</a></li>
                         <li><a href="#contact" class="contact-link">Contact</a></li>
                       </ul>
                     </div>
@@ -152,16 +154,17 @@
             </div>
         </div>
       </section>
-      
       <section class="process" id="process">
         <div class="process-container">
           <h2>Our Process</h2>
+          <div class="process-divider"></div>
           <p class="process-sub"></p>
           <div class="process-steps" role="tablist" aria-label="Process phases">
             <button class="step" data-phase="pre" role="tab" aria-selected="true">1. Pre-Production</button>
             <button class="step" data-phase="prod" role="tab" aria-selected="false">2. Production</button>
             <button class="step" data-phase="post" role="tab" aria-selected="false">3. Post-Production</button>
           </div>
+          
           <div class="process-images" aria-hidden="false">
             <img data-phase="pre" src="https://placehold.co/600x400?text=Pre-Production" alt="Pre-Production placeholder" />
             <img data-phase="prod" src="https://placehold.co/600x400?text=Production" alt="Production placeholder" />
@@ -172,13 +175,74 @@
           </div>
         </div>
       </section>
-    
-    
-</div>
+      
+      <!-- FAQ section inserted between Process and Contact -->
+      <section class="faq" id="FAQ">
+        <div class="faq-container">
+          <h2>FAQs</h2>
+          <div class="process-divider"></div>
+          <div class="faq-list">
+            <div class="faq-item">
+              <button class="faq-question" aria-expanded="false">How much does an animation cost?</button>
+              <div class="faq-answer" hidden>
+                <p>Animation pricing varies widely based on complexity, duration, resolution, and client needs. That said, we can work with you to tailor an animation that meets your goals while maintaining high-quality standards—within virtually any budget.</p>
+              </div>
+            </div>
 
-<section class="contact" id="contact">
+            <div class="faq-item">
+              <button class="faq-question" aria-expanded="false">How long does it take to create a typical medical animation?</button>
+              <div class="faq-answer" hidden>
+                <p>Every project is unique and can take anywhere from a few days to up to four months. Once we determine the scope, we’ll provide a phased approach. Our process is designed for clarity and collaboration, ensuring you’re involved at every step. For more details, check out our <a href="#process">Process page</a>.</p>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-question" aria-expanded="false">What is included in the animation scope?</button>
+              <div class="faq-answer" hidden>
+                <p>Our services can cover everything needed for a finished animation. We manage the entire process—from script, storyboards, and style frames to final delivery. Projects can be provided in any resolution and may include supplemental print materials or PowerPoint slides. We also handle all audio, including music, sound design, and professional narration. For a more immersive experience, we can expand into VR, AR, or 360-degree video.</p>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-question" aria-expanded="false">How many revisions do I get?</button>
+              <div class="faq-answer" hidden>
+                <p>Typically, each project has three stages allotted for revisions, with one round included at each stage. This can be tailored to meet each client’s specific needs.</p>
+                <p><strong>Pre-production revisions</strong> - Storyboard, style sheet/ model sheet</p>
+                <p><strong>Production revisions</strong> - 1st pass animation, 2nd pass animation</p>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-question" aria-expanded="false">What if I need to make changes after receiving the final animations pass?</button>
+              <div class="faq-answer" hidden>
+                <p>Some revisions may require a change order. For example, changes requested after final renders are delivered may involve additional animation, rendering, and compositing.</p>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-question" aria-expanded="false">Do you provide project files upon request?</button>
+              <div class="faq-answer" hidden>
+                <p>Project files can be purchased. However, this must be determined at the start of the project to ensure no assets are used that aren’t freely distributable.</p>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-question" aria-expanded="false">Is less more?</button>
+              <div class="faq-answer" hidden>
+                <p>Most of the time!</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+    <section class="contact" id="contact">
   <div class="contact-container">
     <h2>Contact Us</h2>
+    <div class="contact-divider"></div>
 
       <form id="contact-form" class="contact-form" novalidate aria-labelledby="contact-heading">
         <div class="contact-form-header">
@@ -231,8 +295,8 @@
         <a href="#about">About</a>
         <a href="#services">Services</a>
         <a href="#process">Process</a>
-        <a href="#contact">Contact</a>
         <a href="#FAQ">FAQ</a>
+        <a href="#contact">Contact</a>
       </nav>
       <div class="footer-social">
         <a href="#" aria-label="YouTube"><i class="bxl bx-youtube"></i></a>
