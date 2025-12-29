@@ -266,6 +266,34 @@ document.addEventListener('click', function(e) {
   setTimeout(() => { window.scrollTo({ top, behavior: 'smooth' }); }, 260);
 });
 
+// FAQ accordion behavior
+document.addEventListener('DOMContentLoaded', function() {
+  const faqButtons = Array.from(document.querySelectorAll('.faq-question'));
+  if (!faqButtons.length) return;
+  faqButtons.forEach(btn => {
+    btn.addEventListener('click', function() {
+      const expanded = this.getAttribute('aria-expanded') === 'true';
+      // collapse all siblings for single-open behavior
+      faqButtons.forEach(b => {
+        b.setAttribute('aria-expanded', 'false');
+        const ans = b.nextElementSibling;
+        if (ans && ans.classList.contains('faq-answer')) ans.hidden = true;
+      });
+      // toggle this one
+      this.setAttribute('aria-expanded', expanded ? 'false' : 'true');
+      const answer = this.nextElementSibling;
+      if (answer && answer.classList.contains('faq-answer')) answer.hidden = expanded;
+    });
+    // keyboard activation
+    btn.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        this.click();
+      }
+    });
+  });
+});
+
 window.addEventListener('DOMContentLoaded', function() {
     const preloader = document.getElementById('preloader');
     const progress = document.getElementById('preloader-progress');
