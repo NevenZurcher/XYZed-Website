@@ -3,7 +3,7 @@ node_modules/
 
 # Source files (in case accidentally copied)
 src/
-*.css
+# *.css
 *.ts
 *.scss
 

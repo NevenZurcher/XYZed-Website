@@ -43,7 +43,7 @@ const homeLoadedPromise = new Promise((res) => { _resolveHomeLoaded = res; });
 
 
 // Prevent reload and show demo video when Demo Reel is clicked
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
   // Ensure background video is allowed to autoplay in restrictive browsers
   try {
     const bgVideo = document.querySelector('.video video');
@@ -56,13 +56,13 @@ document.addEventListener('DOMContentLoaded', function() {
       bgVideo.setAttribute('playsinline', '');
       // Attempt to play (may return a promise)
       const p = bgVideo.play();
-      if (p && typeof p.then === 'function') p.catch(() => {});
+      if (p && typeof p.then === 'function') p.catch(() => { });
     }
   } catch (e) { /* ignore */ }
 
   const demoReelLink = document.querySelector('.navbar-menu a[href="#splineAction"]');
   if (demoReelLink) {
-    demoReelLink.addEventListener('click', function(e) {
+    demoReelLink.addEventListener('click', function (e) {
       e.preventDefault();
       // Show demo video overlay
       document.querySelector('#home').scrollIntoView({ behavior: 'smooth' });
@@ -86,7 +86,7 @@ document.addEventListener('DOMContentLoaded', function() {
 // Hide navbar on scroll down, show on scroll up
 let lastScrollTop = 0;
 const navbar = document.querySelector('.header');
-window.addEventListener('scroll', function() {
+window.addEventListener('scroll', function () {
   let st = window.pageYOffset || document.documentElement.scrollTop;
   if (navbar) {
     if (st > lastScrollTop && st > 50) {
@@ -101,39 +101,71 @@ window.addEventListener('scroll', function() {
     lastScrollTop = st <= 0 ? 0 : st;
   }
 });
-window.addEventListener('scroll', function() {
-    const tagline = document.querySelector('.tagline');
-    if (window.scrollY > 100) {
-        tagline.classList.add('visible');
+window.addEventListener('scroll', function () {
+  const tagline = document.querySelector('.tagline');
+  const aboutSection = document.getElementById('about');
+  const splineContainer = document.getElementById('spline-container');
+
+  // Original tagline visibility logic - appears after scrolling down 100px
+  if (window.scrollY > 100) {
+    tagline.classList.add('visible');
+  } else {
+    tagline.classList.remove('visible');
+  }
+
+  // Separate logic for spline and tagline when scrolling past about section
+  if (aboutSection && splineContainer && tagline) {
+    const aboutTop = aboutSection.getBoundingClientRect().top;
+    const windowHeight = window.innerHeight;
+
+    // Check if we've scrolled past about section
+    const pastAbout = aboutTop < windowHeight * 0.5;
+
+    // SPLINE: Only hide when scrolling past about section
+    if (pastAbout) {
+      splineContainer.style.opacity = '0';
+      splineContainer.style.pointerEvents = 'none';
     } else {
-        tagline.classList.remove('visible');
+      splineContainer.style.opacity = '1';
+      splineContainer.style.pointerEvents = 'auto';
     }
-    const blurAmount = Math.min(window.scrollY / 100, 1) * 8;
-    const dimAmount = Math.min(window.scrollY / 300, 0.5);
-    const splineCanvas = document.getElementById('spline-canvas');
-    if (splineCanvas) {
-        splineCanvas.style.filter = `blur(${blurAmount}px)`;
-        splineCanvas.style.opacity = '';
+
+    // TAGLINE: Hide when at top (scrollY < 100) OR when past about section
+    if (window.scrollY < 100 || pastAbout) {
+      tagline.style.opacity = '0';
+      tagline.style.pointerEvents = 'none';
+    } else {
+      tagline.style.opacity = '1';
+      tagline.style.pointerEvents = 'auto';
     }
-    const videoSection = document.querySelector('.video');
-    videoSection.style.filter = `blur(${blurAmount}px)`;
-    videoSection.style.opacity = `${1 - dimAmount}`;
-    // Blur effect for demo video overlay
-    const demoTest = document.getElementById('demo-test');
-    if (demoTest && demoTest.style.display === 'block') {
-        const demoVid = demoTest.querySelector('video');
-        if (demoVid) {
-            demoVid.style.filter = `blur(${blurAmount}px)`;
-            demoVid.style.opacity = `${1 - dimAmount}`;
-        }
+  }
+
+  const blurAmount = Math.min(window.scrollY / 100, 1) * 8;
+  const dimAmount = Math.min(window.scrollY / 300, 0.5);
+  const splineCanvas = document.getElementById('spline-canvas');
+  if (splineCanvas) {
+    splineCanvas.style.filter = `blur(${blurAmount}px)`;
+    splineCanvas.style.opacity = '';
+  }
+  const videoSection = document.querySelector('.video');
+  videoSection.style.filter = `blur(${blurAmount}px)`;
+  videoSection.style.opacity = `${1 - dimAmount}`;
+  // Blur effect for demo video overlay
+  const demoTest = document.getElementById('demo-test');
+  if (demoTest && demoTest.style.display === 'block') {
+    const demoVid = demoTest.querySelector('video');
+    if (demoVid) {
+      demoVid.style.filter = `blur(${blurAmount}px)`;
+      demoVid.style.opacity = `${1 - dimAmount}`;
     }
+  }
 });
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
   const demoTest = document.getElementById('demo-test');
   const hideBtn = document.getElementById('hideDemoTest');
   if (hideBtn && demoTest) {
-    hideBtn.addEventListener('click', function() {
+    hideBtn.addEventListener('click', function () {
       demoTest.style.display = 'none';
       const vid = demoTest.querySelector('video');
       if (vid) {
@@ -150,7 +182,7 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 });
 
-window.addEventListener('hashchange', function() {
+window.addEventListener('hashchange', function () {
   if (location.hash === '#splineAction') {
     const video = document.querySelector('.video video');
     const demoTest = document.getElementById('demo-test');
@@ -172,7 +204,7 @@ window.addEventListener('hashchange', function() {
 // Home link resets video/image state
 const homeLink = document.querySelector('.navbar-menu a[href="#home"]');
 if (homeLink) {
-  homeLink.addEventListener('click', function(e) {
+  homeLink.addEventListener('click', function (e) {
     e.preventDefault();
     // Reset hash
     history.replaceState(null, '', ' ');
@@ -238,7 +270,7 @@ if (homeLink) {
 })();
 
 // Smooth scroll to contact and account for fixed header height
-document.addEventListener('click', function(e) {
+document.addEventListener('click', function (e) {
   const el = e.target.closest && e.target.closest('a[href="#contact"]');
   if (!el) return;
   e.preventDefault();
@@ -267,11 +299,11 @@ document.addEventListener('click', function(e) {
 });
 
 // FAQ accordion behavior
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
   const faqButtons = Array.from(document.querySelectorAll('.faq-question'));
   if (!faqButtons.length) return;
   faqButtons.forEach(btn => {
-    btn.addEventListener('click', function() {
+    btn.addEventListener('click', function () {
       const expanded = this.getAttribute('aria-expanded') === 'true';
       // collapse all siblings for single-open behavior
       faqButtons.forEach(b => {
@@ -285,7 +317,7 @@ document.addEventListener('DOMContentLoaded', function() {
       if (answer && answer.classList.contains('faq-answer')) answer.hidden = expanded;
     });
     // keyboard activation
-    btn.addEventListener('keydown', function(e) {
+    btn.addEventListener('keydown', function (e) {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
         this.click();
@@ -294,85 +326,85 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 
-window.addEventListener('DOMContentLoaded', function() {
-    const preloader = document.getElementById('preloader');
-    const progress = document.getElementById('preloader-progress');
-    document.body.style.overflow = 'hidden';
-    // Start loading the About spline during the preloader so it finishes
-    // loading while the preloader is visible.
-    try {
-      initAboutSpline();
-    } catch (e) {
-      // initAboutSpline may not be defined yet if the function hasn't been
-      // parsed; wrap defensively.
-      console.warn('initAboutSpline not available yet, will load later');
-    }
-    // Also eagerly trigger load/prefetch for the Contact spline-viewer so
-    // its scene downloads while the preloader is visible.
-    try {
-      const contactViewer = document.querySelector('.contact-container spline-viewer');
-      if (contactViewer) {
-        const url = contactViewer.getAttribute('url');
-        // If the web-component exposes a load() method, call it. Otherwise
-        // reassign the attribute and do a fetch to warm the cache.
-        if (typeof contactViewer.load === 'function') {
-          try { contactViewer.load(url); } catch (err) { console.warn('contactViewer.load failed', err); }
-        } else if (url) {
-          // Re-assign attribute to nudge the component to load
-          contactViewer.setAttribute('url', url);
-          // Try a lightweight fetch to warm cache (best-effort)
-          fetch(url, { method: 'GET', mode: 'cors', cache: 'force-cache' })
-            .then(() => console.log('Prefetched contact spline'))
-            .catch(() => {});
-        }
+window.addEventListener('DOMContentLoaded', function () {
+  const preloader = document.getElementById('preloader');
+  const progress = document.getElementById('preloader-progress');
+  document.body.style.overflow = 'hidden';
+  // Start loading the About spline during the preloader so it finishes
+  // loading while the preloader is visible.
+  // try {
+  //   initAboutSpline();
+  // } catch (e) {
+  //   // initAboutSpline may not be defined yet if the function hasn't been
+  //   // parsed; wrap defensively.
+  //   console.warn('initAboutSpline not available yet, will load later');
+  // }
+  // Also eagerly trigger load/prefetch for the Contact spline-viewer so
+  // its scene downloads while the preloader is visible.
+  try {
+    const contactViewer = document.querySelector('.contact-container spline-viewer');
+    if (contactViewer) {
+      const url = contactViewer.getAttribute('url');
+      // If the web-component exposes a load() method, call it. Otherwise
+      // reassign the attribute and do a fetch to warm the cache.
+      if (typeof contactViewer.load === 'function') {
+        try { contactViewer.load(url); } catch (err) { console.warn('contactViewer.load failed', err); }
+      } else if (url) {
+        // Re-assign attribute to nudge the component to load
+        contactViewer.setAttribute('url', url);
+        // Try a lightweight fetch to warm cache (best-effort)
+        fetch(url, { method: 'GET', mode: 'cors', cache: 'force-cache' })
+          .then(() => console.log('Prefetched contact spline'))
+          .catch(() => { });
       }
-    } catch (err) {
-      console.warn('Error while preloading contact spline', err);
     }
-    if (progress) {
-        progress.style.width = '0%';
-        progress.style.width = '100%';
-    }
+  } catch (err) {
+    console.warn('Error while preloading contact spline', err);
+  }
+  if (progress) {
+    progress.style.width = '0%';
+    progress.style.width = '100%';
+  }
 
-    // Wait for spline assets (home + about + contact prefetch) to finish
-    // before hiding the preloader. Fallback to a timeout to avoid stalling.
-    let contactPromise = Promise.resolve();
-    try {
-      const contactViewer = document.querySelector('.contact-container spline-viewer');
-      if (contactViewer) {
-        const url = contactViewer.getAttribute('url');
-        if (typeof contactViewer.load === 'function') {
-          try {
-            const maybe = contactViewer.load(url);
-            contactPromise = (maybe && typeof maybe.then === 'function') ? maybe : Promise.resolve();
-          } catch (e) { contactPromise = Promise.resolve(); }
-        } else if (url) {
-          // Re-assign attribute to nudge the component to load and warm cache.
-          contactViewer.setAttribute('url', url);
-          contactPromise = fetch(url, { method: 'GET', mode: 'cors', cache: 'force-cache' }).catch(() => {});
-        }
+  // Wait for spline assets (home + about + contact prefetch) to finish
+  // before hiding the preloader. Fallback to a timeout to avoid stalling.
+  let contactPromise = Promise.resolve();
+  try {
+    const contactViewer = document.querySelector('.contact-container spline-viewer');
+    if (contactViewer) {
+      const url = contactViewer.getAttribute('url');
+      if (typeof contactViewer.load === 'function') {
+        try {
+          const maybe = contactViewer.load(url);
+          contactPromise = (maybe && typeof maybe.then === 'function') ? maybe : Promise.resolve();
+        } catch (e) { contactPromise = Promise.resolve(); }
+      } else if (url) {
+        // Re-assign attribute to nudge the component to load and warm cache.
+        contactViewer.setAttribute('url', url);
+        contactPromise = fetch(url, { method: 'GET', mode: 'cors', cache: 'force-cache' }).catch(() => { });
       }
-    } catch (err) {
-      contactPromise = Promise.resolve();
     }
+  } catch (err) {
+    contactPromise = Promise.resolve();
+  }
 
-    const allLoads = Promise.allSettled([homeLoadedPromise, aboutLoadedPromise, contactPromise]);
-    const fallback = new Promise((res) => setTimeout(res, 6000));
-    Promise.race([allLoads, fallback]).then(() => {
-      if (preloader) {
-        preloader.classList.add('hide');
-        setTimeout(() => {
-          preloader.style.display = 'none';
-          document.body.style.overflow = '';
-        }, 600);
-      } else {
+  const allLoads = Promise.allSettled([homeLoadedPromise, contactPromise]);
+  const fallback = new Promise((res) => setTimeout(res, 6000));
+  Promise.race([allLoads, fallback]).then(() => {
+    if (preloader) {
+      preloader.classList.add('hide');
+      setTimeout(() => {
+        preloader.style.display = 'none';
         document.body.style.overflow = '';
-      }
-    }).catch(() => {
-      // ensure the UI is restored even if something goes wrong
-      if (preloader) preloader.style.display = 'none';
+      }, 600);
+    } else {
       document.body.style.overflow = '';
-    });
+    }
+  }).catch(() => {
+    // ensure the UI is restored even if something goes wrong
+    if (preloader) preloader.style.display = 'none';
+    document.body.style.overflow = '';
+  });
 });
 
 // Image carousel for services section
@@ -468,93 +500,108 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-const hamburger = document.querySelector('.hamburger');
-const mobileMenu = document.querySelector('.mobile-menu');
-const mobileLinks = document.querySelectorAll('.mobile-menu a');
+// Hamburger menu - wrapped in DOMContentLoaded to ensure elements exist
+document.addEventListener('DOMContentLoaded', function () {
+  console.log('DOM loaded, setting up hamburger menu');
+  const hamburger = document.querySelector('.hamburger');
+  const mobileMenu = document.querySelector('.mobile-menu');
+  const mobileLinks = document.querySelectorAll('.mobile-menu a');
 
-// Hamburger toggle
-hamburger.addEventListener('click', () => {
+  console.log('Hamburger element:', hamburger);
+  console.log('Mobile menu element:', mobileMenu);
+
+  if (!hamburger || !mobileMenu) {
+    console.error('Hamburger or mobile menu not found!');
+    return;
+  }
+
+  // Hamburger toggle
+  hamburger.addEventListener('click', function (e) {
+    console.log('Hamburger clicked!');
+    e.stopPropagation();
     mobileMenu.classList.toggle('active');
     hamburger.classList.toggle('open');
-});
+    console.log('Menu active:', mobileMenu.classList.contains('active'));
+  });
 
-// Mobile link clicks
-mobileLinks.forEach(link => {
+  // Mobile link clicks
+  mobileLinks.forEach(link => {
     link.addEventListener('click', (e) => {
-        const hash = link.getAttribute('href');
+      const hash = link.getAttribute('href');
 
-        // Close mobile menu
-        mobileMenu.classList.remove('active');
-        hamburger.classList.remove('open');
+      // Close mobile menu
+      mobileMenu.classList.remove('active');
+      hamburger.classList.remove('open');
 
-        // Home link resets demo/video
-        if (hash === '#home') {
-            e.preventDefault();
-            // Reset hash
-            history.replaceState(null, '', ' ');
-            // Hide demo overlay and restore background video
-            const demoTest = document.getElementById('demo-test');
-            const demoVid = demoTest?.querySelector('video');
-            if (demoTest) demoTest.style.display = 'none';
-            if (demoVid) {
-                demoVid.pause();
-                demoVid.currentTime = 0;
-            }
-            const bgVideo = document.querySelector('.video video');
-            if (bgVideo) {
-                bgVideo.style.display = '';
-                bgVideo.classList.remove('fade-out');
-            }
-            // Scroll to top smoothly
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-            return; // stop further handling
+      // Home link resets demo/video
+      if (hash === '#home') {
+        e.preventDefault();
+        // Reset hash
+        history.replaceState(null, '', ' ');
+        // Hide demo overlay and restore background video
+        const demoTest = document.getElementById('demo-test');
+        const demoVid = demoTest?.querySelector('video');
+        if (demoTest) demoTest.style.display = 'none';
+        if (demoVid) {
+          demoVid.pause();
+          demoVid.currentTime = 0;
+        }
+        const bgVideo = document.querySelector('.video video');
+        if (bgVideo) {
+          bgVideo.style.display = '';
+          bgVideo.classList.remove('fade-out');
+        }
+        // Scroll to top smoothly
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        return; // stop further handling
+      }
+
+      // Handle spline/demo overlay link
+      if (hash === '#splineAction') {
+        e.preventDefault();
+        const demoTest = document.getElementById('demo-test');
+        const video = document.querySelector('.video video');
+
+        if (demoTest && video) {
+          video.classList.add('fade-out');
+          setTimeout(() => {
+            setTimeout(() => {
+              demoTest.style.display = 'block';
+              const vid = demoTest.querySelector('video');
+              if (vid) vid.play();
+              video.style.display = 'none';
+            }, 250);
+          }, 500);
         }
 
-        // Handle spline/demo overlay link
-        if (hash === '#splineAction') {
-            e.preventDefault();
-            const demoTest = document.getElementById('demo-test');
-            const video = document.querySelector('.video video');
+        // Optional: scroll to top
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        return;
+      }
 
-            if (demoTest && video) {
-                video.classList.add('fade-out');
-                setTimeout(() => {
-                    setTimeout(() => {
-                        demoTest.style.display = 'block';
-                        const vid = demoTest.querySelector('video');
-                        if (vid) vid.play();
-                        video.style.display = 'none';
-                    }, 250);
-                }, 500);
-            }
-
-            // Optional: scroll to top
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-            return;
-        }
-
-        // Smooth scroll for other anchor links
-        if (hash && hash.startsWith('#')) {
-          e.preventDefault();
-          if (hash === '#contact') {
-            // Use the same offset behavior as the desktop contact handler
-            const contact = document.querySelector('#contact');
-            if (contact) {
-              const header = document.querySelector('.header');
-              const headerHeight = header ? header.getBoundingClientRect().height : 80;
-              const extraGap = 60;
-              const heading = contact.querySelector('h2') || contact.querySelector('h3') || contact;
-              const baseTop = heading.getBoundingClientRect().top + window.pageYOffset;
-              const top = Math.max(0, Math.round(baseTop - headerHeight + extraGap));
-              setTimeout(() => { window.scrollTo({ top, behavior: 'smooth' }); }, 60);
-              setTimeout(() => { window.scrollTo({ top, behavior: 'smooth' }); }, 260);
-            }
-          } else {
-            const target = document.querySelector(hash);
-            if (target) target.scrollIntoView({ behavior: 'smooth' });
+      // Smooth scroll for other anchor links
+      if (hash && hash.startsWith('#')) {
+        e.preventDefault();
+        if (hash === '#contact') {
+          // Use the same offset behavior as the desktop contact handler
+          const contact = document.querySelector('#contact');
+          if (contact) {
+            const header = document.querySelector('.header');
+            const headerHeight = header ? header.getBoundingClientRect().height : 80;
+            const extraGap = 60;
+            const heading = contact.querySelector('h2') || contact.querySelector('h3') || contact;
+            const baseTop = heading.getBoundingClientRect().top + window.pageYOffset;
+            const top = Math.max(0, Math.round(baseTop - headerHeight + extraGap));
+            setTimeout(() => { window.scrollTo({ top, behavior: 'smooth' }); }, 60);
+            setTimeout(() => { window.scrollTo({ top, behavior: 'smooth' }); }, 260);
           }
+        } else {
+          const target = document.querySelector(hash);
+          if (target) target.scrollIntoView({ behavior: 'smooth' });
         }
+      }
     });
+  });
 });
 
 // -------------------------
@@ -563,7 +610,6 @@ mobileLinks.forEach(link => {
 let aboutSplineApp = null;
 let aboutSplineLoaded = false;
 let _resolveAboutLoaded = null;
-const aboutLoadedPromise = new Promise((res) => { _resolveAboutLoaded = res; });
 
 /**
  * Initialize the About spline app. If `force` is true, a new Application
@@ -576,7 +622,7 @@ async function initAboutSpline(force = false) {
 
   // If forcing, clear the previous reference so we create a fresh app.
   if (force && aboutSplineApp) {
-    try { safeCall(aboutSplineApp, ['destroy','dispose','unload']); } catch (e) {}
+    try { safeCall(aboutSplineApp, ['destroy', 'dispose', 'unload']); } catch (e) { }
     aboutSplineApp = null;
     aboutSplineLoaded = false;
   }
@@ -628,7 +674,7 @@ function safeCall(obj, names) {
 function pauseAppAndCanvas(app, canvas) {
   try {
     // Try common pause/stop methods on the runtime
-    if (!safeCall(app, ['pause','stop'])) {
+    if (!safeCall(app, ['pause', 'stop'])) {
       // If the runtime doesn't expose a pause API, avoid hiding the
       // canvas because that can break Spline's internal hit-testing
       // and trigger zones. Leave the canvas visible and rely on the
@@ -643,14 +689,14 @@ function resumeAppAndCanvas(app, canvas) {
     // Ensure canvas is visible first
     if (canvas) canvas.style.display = 'block';
     // Try common resume/play methods
-    return safeCall(app, ['play','resume']);
+    return safeCall(app, ['play', 'resume']);
   } catch (e) { /* ignore */ }
   return false;
 }
 
 function pauseViewer(viewer) {
   try {
-    if (!safeCall(viewer, ['pause','stop'])) {
+    if (!safeCall(viewer, ['pause', 'stop'])) {
       if (viewer) viewer.style.visibility = 'hidden';
     }
   } catch (e) { /* ignore */ }
@@ -659,11 +705,11 @@ function pauseViewer(viewer) {
 function resumeViewer(viewer) {
   try {
     if (viewer) viewer.style.visibility = 'visible';
-    safeCall(viewer, ['play','resume']);
+    safeCall(viewer, ['play', 'resume']);
   } catch (e) { /* ignore */ }
 }
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
   try {
     const homeEl = document.getElementById('home');
     const aboutEl = document.getElementById('about');
@@ -683,7 +729,7 @@ document.addEventListener('DOMContentLoaded', function() {
       });
 
       // choose the most visible section
-      const candidates = ['home','about','contact'];
+      const candidates = ['home', 'about', 'contact'];
       let winner = null, best = -1;
       for (const c of candidates) {
         const v = vis[c] || 0;
@@ -699,7 +745,7 @@ document.addEventListener('DOMContentLoaded', function() {
         pauseViewer(contactViewer);
       } else if (winner === 'about') {
         // Ensure About is initialized (but do not pause it).
-        if (!aboutSplineLoaded) initAboutSpline();
+        // if (!aboutSplineLoaded) initAboutSpline();
         // We don't pause About to avoid breaking trigger zones.
         pauseViewer(contactViewer);
         pauseAppAndCanvas(spline, homeCanvas);
@@ -721,7 +767,7 @@ document.addEventListener('DOMContentLoaded', function() {
 // -------------------------
 // Contact form handling
 // -------------------------
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
   const contactForm = document.getElementById('contact-form');
   if (!contactForm) return;
 
@@ -734,15 +780,15 @@ document.addEventListener('DOMContentLoaded', function() {
     return /\S+@\S+\.\S+/.test(email);
   }
 
-  contactForm.addEventListener('submit', function(e) {
+  contactForm.addEventListener('submit', function (e) {
     e.preventDefault();
-  const email = document.getElementById('email');
-  const message = document.getElementById('message');
+    const email = document.getElementById('email');
+    const message = document.getElementById('message');
 
     let ok = true;
-  // basic validation (email + message only)
-  if (!email.value.trim() || !validateEmail(email.value.trim())) { showError(email, 'Please enter a valid email'); ok = false; } else { showError(email, ''); }
-  if (!message.value.trim()) { showError(message, 'Please enter a message'); ok = false; } else { showError(message, ''); }
+    // basic validation (email + message only)
+    if (!email.value.trim() || !validateEmail(email.value.trim())) { showError(email, 'Please enter a valid email'); ok = false; } else { showError(email, ''); }
+    if (!message.value.trim()) { showError(message, 'Please enter a message'); ok = false; } else { showError(message, ''); }
 
     if (!ok) return;
 
@@ -769,7 +815,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // Process steps: swap detail content when step buttons are clicked
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
   const steps = Array.from(document.querySelectorAll('.process-steps .step'));
   const detail = document.getElementById('process-detail');
   if (!steps.length || !detail) return;
@@ -795,7 +841,7 @@ document.addEventListener('DOMContentLoaded', function() {
           <li><span>Second pass animation</span> – This pass is a half-resolution render with all revisions from the first pass applied, providing a more refined preview of the final deliverable.</li>
         </ul>
       `
-          },
+    },
     post: {
       title: 'Post-Production',
       body: `
@@ -880,7 +926,7 @@ document.addEventListener('DOMContentLoaded', function() {
   if (document.fonts && typeof document.fonts.ready !== 'undefined') {
     document.fonts.ready.then(() => {
       computeDetailMinHeight();
-    }).catch(() => {});
+    }).catch(() => { });
   }
 });
 
@@ -889,7 +935,7 @@ try {
   const y = new Date().getFullYear();
   const el = document.getElementById('year');
   if (el) el.textContent = y;
-} catch (e) {}
+} catch (e) { }
 
 // -------------------------
 // Responsive spline scaling (JS-driven interpolation)
@@ -898,3 +944,27 @@ try {
 // -------------------------
 // Removed JS-driven CSS variables for spline transform/scale per request.
 // Spline sizing now uses static CSS rules and media queries in styles.css.
+
+// -------------------------
+// Services tagline cycling
+// -------------------------
+document.addEventListener('DOMContentLoaded', function () {
+  const taglines = Array.from(document.querySelectorAll('.services-tagline .tagline-text'));
+  if (taglines.length === 0) return;
+
+  let currentIndex = 0;
+
+  function cycleTagline() {
+    // Remove active class from current tagline
+    taglines[currentIndex].classList.remove('active');
+
+    // Move to next tagline
+    currentIndex = (currentIndex + 1) % taglines.length;
+
+    // Add active class to new tagline
+    taglines[currentIndex].classList.add('active');
+  }
+
+  // Cycle every 5 seconds
+  setInterval(cycleTagline, 5000);
+});
