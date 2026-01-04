@@ -113,16 +113,22 @@ window.addEventListener('scroll', function () {
     tagline.classList.remove('visible');
   }
 
-  // Separate logic for spline and tagline when scrolling past about section
+  // Separate logic for spline, video, and tagline when scrolling past about section
   if (aboutSection && splineContainer && tagline) {
-    const aboutTop = aboutSection.getBoundingClientRect().top;
+    const videoSection = document.querySelector('.video');
+    const servicesSection = document.getElementById('services');
     const windowHeight = window.innerHeight;
 
-    // Check if we've scrolled past about section
-    const pastAbout = aboutTop < windowHeight * 0.5;
 
-    // SPLINE: Only hide when scrolling past about section
-    if (pastAbout) {
+    // Check if we've scrolled past services section
+    let pastServices = false;
+    if (servicesSection) {
+      const servicesTop = servicesSection.getBoundingClientRect().top;
+      pastServices = servicesTop < windowHeight * 0.5;
+    }
+
+    // SPLINE: Only hide when scrolling past services section
+    if (pastServices) {
       splineContainer.style.opacity = '0';
       splineContainer.style.pointerEvents = 'none';
     } else {
@@ -130,8 +136,19 @@ window.addEventListener('scroll', function () {
       splineContainer.style.pointerEvents = 'auto';
     }
 
-    // TAGLINE: Hide when at top (scrollY < 100) OR when past about section
-    if (window.scrollY < 100 || pastAbout) {
+    // VIDEO: Only hide when scrolling past services section
+    if (videoSection) {
+      if (pastServices) {
+        videoSection.style.opacity = '0';
+        videoSection.style.pointerEvents = 'none';
+      } else {
+        videoSection.style.opacity = '1';
+        videoSection.style.pointerEvents = 'auto';
+      }
+    }
+
+    // TAGLINE: Hide when at top (scrollY < 100) OR when past services section
+    if (window.scrollY < 100 || pastServices) {
       tagline.style.opacity = '0';
       tagline.style.pointerEvents = 'none';
     } else {
@@ -147,9 +164,11 @@ window.addEventListener('scroll', function () {
     splineCanvas.style.filter = `blur(${blurAmount}px)`;
     splineCanvas.style.opacity = '';
   }
-  const videoSection = document.querySelector('.video');
-  videoSection.style.filter = `blur(${blurAmount}px)`;
-  videoSection.style.opacity = `${1 - dimAmount}`;
+  const videoElement = document.querySelector('.video video');
+  if (videoElement) {
+    videoElement.style.filter = `blur(${blurAmount}px)`;
+    videoElement.style.opacity = `${1 - dimAmount}`;
+  }
   // Blur effect for demo video overlay
   const demoTest = document.getElementById('demo-test');
   if (demoTest && demoTest.style.display === 'block') {
