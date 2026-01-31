@@ -407,9 +407,22 @@ window.addEventListener('DOMContentLoaded', function () {
     contactPromise = Promise.resolve();
   }
 
-  const allLoads = Promise.allSettled([homeLoadedPromise, contactPromise]);
-  const fallback = new Promise((res) => setTimeout(res, 6000));
-  Promise.race([allLoads, fallback]).then(() => {
+  // Preloader logic:
+  // We no longer wait for the heavy Spline scene (homeLoadedPromise) to finish.
+  // Instead, we just wait for a minimum "branding" time (e.g. 2.5s) or the window load,
+  // then dismiss the preloader so the site is interactive.
+  // The Spline scene will fade in independently when it's ready.
+
+  const minLoadTime = new Promise(resolve => setTimeout(resolve, 1500)); // Ensure logo plays for a bit
+  const windowLoad = new Promise(resolve => {
+    if (document.readyState === 'complete') {
+      resolve();
+    } else {
+      window.addEventListener('load', resolve);
+    }
+  });
+
+  Promise.all([minLoadTime, windowLoad]).then(() => {
     if (preloader) {
       preloader.classList.add('hide');
       setTimeout(() => {
@@ -419,10 +432,16 @@ window.addEventListener('DOMContentLoaded', function () {
     } else {
       document.body.style.overflow = '';
     }
-  }).catch(() => {
-    // ensure the UI is restored even if something goes wrong
-    if (preloader) preloader.style.display = 'none';
-    document.body.style.overflow = '';
+  });
+
+  // Independent handling of the Home Spline appearance
+  // When it loads, we fade it in.
+  homeLoadedPromise.then(() => {
+    const canvas = document.getElementById('spline-canvas');
+    if (canvas) {
+      canvas.style.transition = 'opacity 1s ease';
+      canvas.style.opacity = '1';
+    }
   });
 });
 
@@ -767,10 +786,10 @@ document.addEventListener('DOMContentLoaded', function () {
         // if (!aboutSplineLoaded) initAboutSpline();
         // We don't pause About to avoid breaking trigger zones.
         pauseViewer(contactViewer);
-        pauseAppAndCanvas(spline, homeCanvas);
+        // pauseAppAndCanvas(spline, homeCanvas); // Keep home running to fix cursor tracking
       } else if (winner === 'contact') {
         resumeViewer(contactViewer);
-        pauseAppAndCanvas(spline, homeCanvas);
+        // pauseAppAndCanvas(spline, homeCanvas); // Keep home running to fix cursor tracking
         // Do not pause About; leave it running
       }
     }, { threshold: [0, 0.25, 0.5, 0.75, 1] });

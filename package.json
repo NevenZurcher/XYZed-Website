@@ -6,7 +6,7 @@
     "gen:fonts": "node scripts/generate-fonts-css.js"
   },
   "dependencies": {
-    "@splinetool/runtime": "^1.10.74",
+    "@splinetool/runtime": "^1.12.46",
     "vite": "^7.3.0"
   }
 }
