@@ -49,9 +49,9 @@
     <!-- Preload LCP Video -->
     <link rel="preload" as="video" type="video/webm" href="assets/video/herovideo.webm">
 
-    <!-- React App Entry -->
-  <script type="module" crossorigin src="/assets/index-BEvSt0nx.js"></script>
-  <link rel="stylesheet" crossorigin href="/assets/index-DyE7zSiS.css">
+    <!-- React App Entry -->
+  <script type="module" crossorigin src="/assets/index-C8a_kFeT.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/index-GeHQwhlA.css">
 </head>
 
 <body>
@@ -59,8 +59,8 @@
     <!-- Intro Overlay -->
     <div id="intro-overlay" class="intro-overlay" aria-hidden="true">
         <video id="intro-video" class="intro-video" autoplay muted playsinline preload="auto">
-            <source src="assets/video/Loading.webm" type="video/webm">
-            <source src="assets/video/Loading.mp4" type="video/mp4">
+            <source src="assets/video/Loading 3.webm" type="video/webm">
+            <source src="assets/video/Loading 3.mp4" type="video/mp4">
         </video>
     </div>
 
@@ -82,7 +82,7 @@
                     <li><a href="#services">Services</a></li>
                     <li><a href="#process">Process</a></li>
                     <li><a href="#splineAction">Demo Reel</a></li>
-                    <li><a href="#FAQ">FAQ</a></li>
+                    <li><a href="#faq">FAQ</a></li>
                     <li><a href="#shop">Shop</a></li>
                     <li><a href="#contact">Contact</a></li>
                 </ul>
@@ -99,7 +99,7 @@
                     <div class="navbar-side">
                         <ul class="navbar-side-menu">
                             <li><a href="#shop" class="shop-link">Shop</a></li>
-                            <li><a href="#FAQ" class="faq-link">FAQ</a></li>
+                            <li><a href="#faq" class="faq-link">FAQ</a></li>
                             <li><a href="#contact" class="contact-link">Contact</a></li>
                         </ul>
                     </div>
@@ -119,45 +119,6 @@
 
     </header>
 
-    <!-- 1. Navigation Header -->
-    <!-- <header class="glass-nav">
-        <div class="nav-container"> -->
-    <!-- Gray Background Ribbon now tracks relative to container -->
-    <!-- <div class="grey-ribbon-bg"></div>
-
-            <div class="logo-wrapper">
-                <a href="#home">
-                    <img src="assets/image/LOGO.png" alt="XYZed Logo" class="nav-logo">
-                </a>
-            </div>
-
-            <div class="nav-content" id="navContent">
-                <div class="nav-left">
-                    <a href="#home">HOME</a>
-                    <a href="#about">ABOUT</a>
-                    <a href="#services">SERVICES</a>
-                    <a href="#process">PROCESS</a>
-                    <a href="#demo">DEMO REEL</a>
-                </div>
-
-                <div class="nav-right">
-                    <a href="#shop">SHOP</a>
-                    <a href="#faq">FAQ</a>
-                    <a href="#contact" class="btn-contact">CONTACT</a>
-                    <div class="social-icons">
-                        <a href="#"><i class="bxl bx-youtube"></i></a>
-                        <a href="#"><i class="bxl bx-instagram"></i></a>
-                        <a href="#"><i class="bxl bx-twitter-x"></i></a>
-                    </div>
-                </div>
-            </div>
-
-            <button class="mobile-toggle">
-                <span></span>
-            </button>
-        </div>
-    </header> -->
-
     <main class="stack-container">
         <!-- 1. Regular Parallax: Hero + Main -->
         <div class="reveal-group regular-parallax">
@@ -174,12 +135,18 @@
                         Your browser does not support the video tag.
                     </video>
                 </div>
+                <!-- Demo Video -->
+                <video class="demo-video" playsinline muted loop poster="assets/img/hero-poster.jpg">
+                    <source src="assets/video/DEMO_COMING SOON_TEMP.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
                 <div id="r3f-hero-canvas"
                     style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10;"></div>
                 <!-- Gradient Blur Overlay -->
                 <div class="hero-blur-overlay"></div>
                 <div class="content-wrapper">
                     <div id="hero-title-root"></div>
+                    <div id="demo-button-root"></div>
                 </div>
             </section>
 
@@ -197,16 +164,41 @@
                         Your browser does not support the video tag.
                     </video>
                 </div>
-                <div class="content-wrapper">
-
+                <div class="section-wrapper">
+                    <div class="section-header">
+                        <h2 class="section-title">ABOUT US</h2>
+                    </div>
+                    <div class="section-divider"></div>
+                    <div class="content-wrapper about-content-container">
+                        <div class="about-left">
+                            <div class="about-banner-container">
+                                <h3 class="about-banner">The Birth of a new studio</h3>
+                            </div>
+                            <div class="about-text-container">
+                                <p class="about-text">Drawing on over two decades of experience, XYZed was founded to bring your stories to life through compelling 3D experiences. We specialize in high-end medical animation, character animation, motion graphics, VFX, and 3D illustration.</p>
+                                <p class="about-text">At XYZed, we push the boundaries of visual storytelling, transforming concepts into immersive experiences that educate, engage, and inspire.</p>
+                            </div>
+                        </div>
+                        <div class="about-right">
+                            <div class="about-taglines">
+                                <div class="about-tagline">Woven into every cell, DNA is the core of creation.</div>
+                                <div class="about-tagline">Science deciphers the code&hellip;Our imagination illuminates it.</div>
+                                <div class="about-tagline">Turning strands of possibility into worlds yet unseen.</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </section>
         </div>
 
-        <!-- 2. Reverse Parallax Sections (Uncover Effect) -->
-        <div class="reveal-group reverse-parallax" style="z-index: 40;">
+        <!-- 2. Services & Process (Blinds Transition) -->
+        <div class="reveal-group reverse-parallax blinds-stage" style="z-index: 40; height: 300vh;">
             <div id="services" class="parallax-anchor"></div>
-            <section class="sticky-section services">
+            <div id="process" class="parallax-anchor" style="top: 200vh;"></div>
+            
+            <div class="blinds-layers sticky-section">
+                <!-- Services Section -->
+                <section class="blinds-layer services">
                 <div class="video-background">
                     <video autoplay muted loop playsinline preload="none" poster="assets/image/services.webp"
                         class="bg-video">
@@ -301,23 +293,43 @@
                         </ul>
                     </div>
                 </div>
-            </section>
-        </div>
+                </section>
 
-        <div class="reveal-group reverse-parallax" style="z-index: 30;">
-            <div id="process" class="parallax-anchor"></div>
-            <section class="sticky-section process">
-                <div class="content-wrapper">
+                <!-- Process Section -->
+                <section class="blinds-layer process">
+                    <div class="section-wrapper">
+                        <div class="section-header">
+                            <h2 class="section-title">OUR PROCESS</h2>
+                        </div>
+                        <div class="section-divider"></div>
+                        <div class="content-wrapper">
 
-                </div>
-            </section>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- SVG Mask Definition -->
+                <svg width="0" height="0" class="blinds-svg-defs" style="position: absolute; pointer-events: none;">
+                    <defs>
+                        <mask id="blinds-mask" maskContentUnits="objectBoundingBox">
+                            <g id="blinds-group"></g>
+                        </mask>
+                    </defs>
+                </svg>
+            </div>
         </div>
 
         <div class="reveal-group reverse-parallax" style="z-index: 20;">
             <div id="faq" class="parallax-anchor"></div>
             <section class="sticky-section faq">
-                <div class="content-wrapper">
+                <div class="section-wrapper">
+                    <div class="section-header">
+                        <h2 class="section-title">FAQs</h2>
+                    </div>
+                    <div class="section-divider"></div>
+                    <div class="content-wrapper">
 
+                    </div>
                 </div>
             </section>
         </div>
@@ -325,8 +337,14 @@
         <div class="reveal-group reverse-parallax" style="z-index: 10;">
             <div id="contact" class="parallax-anchor"></div>
             <section class="sticky-section contact">
-                <div class="content-wrapper">
+                <div class="section-wrapper">
+                    <div class="section-header">
+                        <h2 class="section-title">CONTACT US</h2>
+                    </div>
+                    <div class="section-divider"></div>
+                    <div class="content-wrapper">
 
+                    </div>
                 </div>
             </section>
         </div>
