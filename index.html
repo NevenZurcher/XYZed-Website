@@ -46,11 +46,18 @@
 
     <!-- Stylesheet -->
 
-    <!-- Preload LCP Video -->
+    <!-- Preload LCP Media -->
+    <link rel="preload" as="image" type="image/webp" href="assets/image/XyZed_LOGO_NEWest.webp">
     <link rel="preload" as="video" type="video/webm" href="assets/video/herovideo.webm">
 
     <!-- React App Entry -->
-  <script type="module" crossorigin src="/assets/index-lfmHjzlT.js"></script>
+  <script type="module" crossorigin src="/assets/index-DFnfTeqf.js"></script>
+  <link rel="modulepreload" crossorigin href="/assets/rolldown-runtime-COnpUsM8.js">
+  <link rel="modulepreload" crossorigin href="/assets/vendor-DnKa5AJj.js">
+  <link rel="modulepreload" crossorigin href="/assets/vendor-framer-motion-bOUQGmLx.js">
+  <link rel="modulepreload" crossorigin href="/assets/vendor-react-C0JzMuUl.js">
+  <link rel="modulepreload" crossorigin href="/assets/vendor-three-DwuxdxZp.js">
+  <link rel="modulepreload" crossorigin href="/assets/vendor-gsap-CbS34eAa.js">
   <link rel="stylesheet" crossorigin href="/assets/index-BvjfQ6lU.css">
 </head>
 
@@ -68,7 +75,7 @@
         <nav class="navbar">
             <div class="navbar-container">
                 <a href="#home" class="navbar-logo-link" aria-label="To Home Page"><img
-                        src="assets/image/XyZed_LOGO_NEWest.png" class="navbar-logo" alt="XyZed logo" width="120"
+                        src="assets/image/XyZed_LOGO_NEWest.webp" class="navbar-logo" alt="XyZed logo" width="120"
                         height="60" fetchpriority="high"></a>
                 <div class="hamburger" tabindex="0" role="button" aria-label="Toggle Navigation" aria-expanded="false">
                     <span></span>
@@ -319,7 +326,7 @@
                 <!-- Process Section -->
                 <section class="blinds-layer process">
                     <div class="video-background">
-                        <video autoplay muted loop playsinline preload="none" poster="assets/image/process temp 5.png"
+                        <video autoplay muted loop playsinline preload="none"
                             class="bg-video">
                             <source src="assets/video/PROCESS.webm" type="video/webm">
                             <source src="assets/video/PROCESS.mp4" type="video/mp4">
@@ -407,15 +414,15 @@
 
                                     <div class="process-arch-image-column">
                                         <div class="process-arch-image-wrapper" data-index="3">
-                                            <img src="assets\image\STORYBOARD.jpg" alt="Storyboard">
+                                            <img src="assets\image\STORYBOARD.webp" alt="Storyboard" loading="lazy" decoding="async">
                                         </div>
 
                                         <div class="process-arch-image-wrapper" data-index="2">
-                                            <img src="assets\image\WIREFRAME_B.jpg" alt="Wireframe">
+                                            <img src="assets\image\WIREFRAME_B.webp" alt="Wireframe" loading="lazy" decoding="async">
                                         </div>
 
                                         <div class="process-arch-image-wrapper" data-index="1">
-                                            <img src="assets\image\RENDER.jpg" alt="Render">
+                                            <img src="assets\image\RENDER.webp" alt="Render" loading="lazy" decoding="async">
                                         </div>
                                     </div>
                                 </div>
@@ -439,7 +446,7 @@
             <div id="faq" class="parallax-anchor"></div>
             <section class="sticky-section faq">
                 <div class="video-background">
-                    <video autoplay muted loop playsinline preload="none" poster="assets/image/FAQ_BKG_2.jpg"
+                    <video autoplay muted loop playsinline preload="none"
                         class="bg-video">
                         <source src="assets/video/FAQ.webm" type="video/webm">
                         <source src="assets/video/FAQ.mp4" type="video/mp4">
@@ -462,7 +469,7 @@
             <div id="contact" class="parallax-anchor"></div>
             <section class="sticky-section contact">
                 <div class="video-background">
-                    <video autoplay muted loop playsinline preload="none" poster="assets/image/CONTACT_US.jpg"
+                    <video autoplay muted loop playsinline preload="none"
                         class="bg-video">
                         <source src="assets/video/Contact Us.webm" type="video/webm">
                         <source src="assets/video/Contact Us.mp4" type="video/mp4">
