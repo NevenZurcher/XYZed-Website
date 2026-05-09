@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+    <meta name="referrer" content="origin-when-cross-origin">
+    <meta name="description" content="XyZed Shop - Coming Soon.">
+    <title>XyZed - Shop</title>
+
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/image/XYZED_LOGO_NOTEXT.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/image/XYZED_LOGO_NOTEXT.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/image/XYZED_LOGO_NOTEXT.png">
+    <!-- Preconnect to Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Custom Fonts -->
+    
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Outfit:wght@400;700;900&display=swap">
+
+    <!-- Stylesheet -->
+
+    <style>
+        .store-hero {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            width: 100%;
+            overflow: hidden;
+            text-align: center;
+            z-index: 1;
+        }
+
+        .store-hero .video-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .store-hero .video-background::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5); /* Dim the video so text pops */
+            z-index: 1;
+        }
+
+        .store-hero .bg-video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .coming-soon-text {
+            position: relative;
+            z-index: 10;
+        }
+
+        .coming-soon-title {
+            font-family: 'BebasNeue', sans-serif;
+            font-size: clamp(4rem, 8vw, 8rem);
+            color: #fff;
+            margin: 0;
+            letter-spacing: 0.05em;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.8);
+        }
+
+        .coming-soon-subtitle {
+            font-family: 'BebasNeue', sans-serif;
+            font-size: clamp(1.2rem, 2vw, 1.8rem);
+            color: #e0e0e0;
+            margin-top: 1rem;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+        }
+    </style>
+  <script type="module" crossorigin src="/assets/vendor-gsap-BeqOtGRi.js"></script>
+  <script type="module" crossorigin src="/assets/script-t5Ntw1co.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/script-BUayk0ca.css">
+</head>
+
+<body>
+
+    <header class="header">
+        <nav class="navbar">
+            <div class="navbar-container">
+                <a href="/#home" class="navbar-logo-link" aria-label="To Home Page"><img
+                        src="/assets/image/XyZed_LOGO_NEWest.webp" class="navbar-logo" alt="XyZed logo" width="120"
+                        height="60" fetchpriority="high"></a>
+                <div class="hamburger" tabindex="0" role="button" aria-label="Toggle Navigation" aria-expanded="false">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+
+                <ul class="mobile-menu">
+                    <li><a href="/#home">Home</a></li>
+                    <li><a href="/#about">About</a></li>
+                    <li><a href="/#services">Services</a></li>
+                    <li><a href="/#process">Process</a></li>
+                    <li><a href="/#demo">Demo Reel</a></li>
+                    <li><a href="/#faq">FAQ</a></li>
+                    <li><a href="/shop/">Shop</a></li>
+                    <li><a href="/#contact">Contact</a></li>
+                </ul>
+
+                <div class="navbar-bar-bg">
+                    <ul class="navbar-menu">
+                        <li><a href="/#home">Home</a></li>
+                        <li><a href="/#about">About</a></li>
+                        <li><a href="/#services">Services</a></li>
+                        <li><a href="/#process">Process</a></li>
+                        <li><a href="/#demo">Demo Reel</a></li>
+                    </ul>
+
+                    <div class="navbar-side">
+                        <ul class="navbar-side-menu">
+                            <li><a href="/shop/" class="shop-link">Shop</a></li>
+                            <li><a href="/#faq" class="faq-link">FAQ</a></li>
+                            <li><a href="/#contact" class="contact-link">Contact</a></li>
+                        </ul>
+                    </div>
+                    <div class="navbar-social-slant">
+                        <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" class="social-icon"
+                            aria-label="YouTube"><i class="bxl bx-youtube"></i></a>
+                        <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="social-icon"
+                            aria-label="Instagram"><i class="bxl bx-instagram"></i></a>
+                        <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" class="social-icon"
+                            aria-label="Twitter (X)"><i class="bxl bx-twitter-x"></i></a>
+                    </div>
+
+                    <div class="header-divider"></div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="store-hero">
+            <div class="video-background">
+                <video autoplay muted loop playsinline preload="auto" class="bg-video">
+                    <source src="/assets/video/FAQ.webm" type="video/webm">
+                    <source src="/assets/video/FAQ.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+            
+            <div class="coming-soon-text">
+                <h1 class="coming-soon-title">SHOP COMING SOON</h1>
+                <p class="coming-soon-subtitle">We are stocking up another dimension.</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div id="footer-bg-root"></div>
+        <div class="footer-content">
+            <div class="footer-logo">
+                <img src="/assets/image/XYZED_LOGO_NOTEXT.png" alt="XyZed logo mark" class="footer-logo-img" width="177" height="177">
+                <div class="footer-logo-divider"></div>
+                XyZed
+            </div>
+            <p class="footer-tagline">Imagination, Brought to Life in XYZ</p>
+
+            <div class="footer-links-grid">
+                <div class="footer-column">
+                    <h3>Navigation</h3>
+                    <ul>
+                        <li><a href="/#home">Home</a></li>
+                        <li><a href="/#about">About</a></li>
+                        <li><a href="/#services">Services</a></li>
+                        <li><a href="/#process">Process</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Explore</h3>
+                    <ul>
+                        <li><a href="/#demo">Demo Reel</a></li>
+                        <li><a href="/shop/">Shop</a></li>
+                        <li><a href="/#faq">FAQ</a></li>
+                        <li><a href="/#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Connect</h3>
+                    <ul>
+                        <li><a href="#" target="_blank" rel="noopener noreferrer">YouTube</a></li>
+                        <li><a href="#" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+                        <li><a href="#" target="_blank" rel="noopener noreferrer">X</a></li>
+                        <li><a href="mailto:MZ@XyZed.art">MZ@XyZed.art</a></li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 XyZed Animation Studio. All rights reserved.</p>
+            <p>Website built by <a href="https://nevenzurcher.com" target="_blank" rel="noopener noreferrer"
+                    class="footer-designer-link">Neven Zurcher</a></p>
+        </div>
+    </footer>
+
+</body>
+
+</html>
