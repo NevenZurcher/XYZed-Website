@@ -1,0 +1,26 @@
+import{C as e,Kt as t,bt as n,c as r,et as i,ht as a,jt as o,lt as s,t as c,z as l}from"./vendor-framer-motion-DyX1CStY-CvNo-iX5.js";import{a as u,c as d,f,i as p,l as m}from"./vendor-three-BMpte4se-DeU19Xoh.js";var h=t(r()),g=t(i()),_=c();function v(t){let{nodes:r,materials:i}=f(`/assets/CARD.glb`),c=(0,g.useRef)(),d=(0,g.useRef)({x:.5,y:.5}),p=(0,g.useRef)(.08),[m,h]=(0,g.useState)(!1);(0,g.useEffect)(()=>{let e=()=>h(window.innerWidth<=768);return e(),window.addEventListener(`resize`,e),()=>window.removeEventListener(`resize`,e)},[]);let v=t=>new s({uniforms:{mousePos:{value:new l(.5,.5)},spotlightRadius:{value:p.current},lineColor:{value:new e(t)}},vertexShader:`
+        varying vec3 vPosition;
+        varying vec4 vProjected;
+        
+        void main() {
+          vPosition = position;
+          vProjected = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+          gl_Position = vProjected;
+        }
+      `,fragmentShader:`
+        uniform vec2 mousePos;
+        uniform float spotlightRadius;
+        uniform vec3 lineColor;
+        
+        varying vec3 vPosition;
+        varying vec4 vProjected;
+        
+        void main() {
+          vec2 ndc = vProjected.xy / vProjected.w;
+          vec2 screenPos = ndc * 0.5 + 0.5; // 0..1
+          float dist = distance(screenPos, mousePos);
+          float falloff = 2.0;
+          float opacity = smoothstep(spotlightRadius * falloff, 0.0, dist);
+          gl_FragColor = vec4(lineColor, opacity);
+        }
+      `,transparent:!0,depthWrite:!1,linewidth:1}),y=g.useMemo(()=>({CARD_1:new o(r.CARD_1.geometry),RED1:new o(r[`RED-RS_Material`].geometry),RED2:new o(r[`RED-RS_Material_1`].geometry),BLOOD:new o(r.BLOOD.geometry),MIDDLE:new o(r.MIDDLE.geometry),CAP:new o(r.CAP.geometry)}),[r]),b=g.useMemo(()=>v(16777215),[]),x=g.useMemo(()=>v(13369344),[]);u(e=>{let t=e.clock.elapsedTime;m?(d.current.x=(Math.sin(t*1.5)+1)/2,d.current.y=.5+Math.cos(t*2)*.2):(d.current.x=e.pointer.x*.5+.5,d.current.y=e.pointer.y*.5+.5),[b,x].forEach(e=>{e.uniforms&&(e.uniforms.mousePos.value.set(d.current.x,d.current.y),e.uniforms.spotlightRadius.value=m?.15:p.current)}),c.current&&(m?(c.current.rotation.y=a.lerp(c.current.rotation.y,Math.sin(t*.8)*.08,.05),c.current.rotation.x=a.lerp(c.current.rotation.x,Math.cos(t*.6)*.05,.05),c.current.position.y=Math.sin(t*1.5)*.15):(c.current.rotation.y=a.lerp(c.current.rotation.y,e.pointer.x*Math.PI/30,.05),c.current.rotation.x=a.lerp(c.current.rotation.x,-(e.pointer.y*Math.PI)/45,.05)))});let S=new n({color:1381653,metalness:.9,roughness:.7,envMapIntensity:1.2}),C=new n({color:13369344,metalness:.6,roughness:.3,envMapIntensity:1}),w=new n({color:16777215,metalness:.8,roughness:.2,envMapIntensity:.5});return(0,_.jsxs)(`group`,{ref:c,...t,dispose:null,children:[(0,_.jsxs)(`group`,{position:[-.813,.441,-.026],children:[(0,_.jsxs)(`group`,{position:[.813,-.441,.012],children:[(0,_.jsx)(`mesh`,{geometry:r[`RED-RS_Material`].geometry,material:C}),(0,_.jsx)(`lineSegments`,{geometry:y.RED1,material:x}),(0,_.jsx)(`mesh`,{geometry:r[`RED-RS_Material_1`].geometry,material:C}),(0,_.jsx)(`lineSegments`,{geometry:y.RED2,material:x})]}),(0,_.jsx)(`mesh`,{geometry:r.BLOOD.geometry,material:C,position:[.813,-.441,.012]}),(0,_.jsx)(`lineSegments`,{geometry:y.BLOOD,material:x,position:[.813,-.441,.012]}),(0,_.jsx)(`mesh`,{geometry:r.MIDDLE.geometry,material:w,position:[.813,-.441,.012]}),(0,_.jsx)(`lineSegments`,{geometry:y.MIDDLE,material:b,position:[.813,-.441,.012]}),(0,_.jsx)(`mesh`,{geometry:r.CAP.geometry,material:w,position:[-2.439,1.324,-.036],rotation:[Math.PI/2,.675,-1.577]}),(0,_.jsx)(`lineSegments`,{geometry:y.CAP,material:b,position:[-2.439,1.324,-.036],rotation:[Math.PI/2,.675,-1.577]})]}),(0,_.jsx)(`mesh`,{geometry:r.Phone.geometry,material:w,position:[2.307,-2.067,.017]}),(0,_.jsx)(`mesh`,{geometry:r.CARD_1.geometry,material:S,position:[0,0,-.015]}),(0,_.jsx)(`lineSegments`,{geometry:y.CARD_1,material:b,position:[0,0,-.015]}),(0,_.jsx)(`mesh`,{geometry:r.XYZed_1.geometry,material:w,position:[-4.336,-2.403,.055]}),(0,_.jsx)(`mesh`,{geometry:r.Email_1.geometry,material:w,position:[1.62,.12,.017]}),(0,_.jsx)(`mesh`,{geometry:r.NAME_1.geometry,material:w,position:[1.634,.797,.017]}),(0,_.jsx)(`mesh`,{geometry:r.Extrude1_1.geometry,material:w,position:[3.068,.468,.017]})]})}f.preload(`/assets/CARD.glb`);function y(){let[e,t]=(0,g.useState)(window.innerWidth<=768),[n,r]=(0,g.useState)(!1);(0,g.useEffect)(()=>{let n=()=>t(window.innerWidth<=768);window.addEventListener(`resize`,n);let i=setTimeout(()=>r(!0),e?1500:500);return()=>{window.removeEventListener(`resize`,n),clearTimeout(i)}},[e]);let i=[0,0,0],a=e?12:8.5;return n?(0,_.jsxs)(m,{camera:{position:[0,0,100],fov:45},style:{width:`100%`,height:`100%`,display:`block`,background:`transparent`},dpr:e?1:[1,2],gl:{powerPreference:`high-performance`,antialias:!0},children:[(0,_.jsx)(p,{preset:`studio`}),(0,_.jsx)(`ambientLight`,{intensity:.5}),(0,_.jsx)(`directionalLight`,{position:[10,10,10],intensity:1.5}),(0,_.jsx)(g.Suspense,{fallback:null,children:(0,_.jsx)(d,{speed:e?1.2:1,rotationIntensity:e?.3:.5,floatIntensity:e?.4:.5,floatingRange:e?[-.3,.3]:[-1,1],children:(0,_.jsx)(v,{position:i,scale:a})})})]}):null}var b=document.getElementById(`r3f-contact-canvas`);b&&(0,h.createRoot)(b).render((0,_.jsx)(y,{}));
