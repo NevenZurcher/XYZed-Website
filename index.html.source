@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+    <meta name="referrer" content="origin-when-cross-origin">
+    <meta name="description"
+        content="XYZed provides stunning 3D experiences, innovative interface design, and cutting-edge web elements.">
+    <title>XyZed</title>
+
+    <link rel="icon" type="image/png" sizes="32x32" href="./assets/image/XYZED_LOGO_NOTEXT.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./assets/image/XYZED_LOGO_NOTEXT.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="./assets/image/XYZED_LOGO_NOTEXT.png">
+    <!-- Preconnect to Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Custom Fonts -->
+    <link rel="stylesheet" href="src/styles/fonts.css">
+    <!-- Modern Typography -->
+    <link rel="preload" as="style"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Outfit:wght@400;700;900&display=swap">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Outfit:wght@400;700;900&display=swap"
+        media="print" onload="this.media='all'">
+    <noscript>
+        <link rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Outfit:wght@400;700;900&display=swap">
+    </noscript>
+    <!-- Boxicons for Social Icons (Deferred for performance) -->
+    <link href="https://cdn.boxicons.com/3.0.8/fonts/basic/boxicons.min.css" rel="preload" as="style"
+        onload="this.onload=null;this.rel='stylesheet'">
+    <noscript>
+        <link rel="stylesheet" href="https://cdn.boxicons.com/3.0.8/fonts/basic/boxicons.min.css">
+    </noscript>
+
+    <link href="https://cdn.boxicons.com/3.0.8/fonts/filled/boxicons-filled.min.css" rel="preload" as="style"
+        onload="this.onload=null;this.rel='stylesheet'">
+    <noscript>
+        <link rel="stylesheet" href="https://cdn.boxicons.com/3.0.8/fonts/filled/boxicons-filled.min.css">
+    </noscript>
+
+    <link href="https://cdn.boxicons.com/3.0.8/fonts/brands/boxicons-brands.min.css" rel="preload" as="style"
+        onload="this.onload=null;this.rel='stylesheet'">
+    <noscript>
+        <link rel="stylesheet" href="https://cdn.boxicons.com/3.0.8/fonts/brands/boxicons-brands.min.css">
+    </noscript>
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="src/styles/style.css">
+
+    <!-- Preload LCP Media -->
+    <link rel="preload" as="image" type="image/webp" href="assets/image/XyZed_LOGO_NEWest.webp">
+
+    <!-- Core UI Scripts (Loaded immediately) -->
+    <script type="module" src="/src/scripts/intro.js"></script>
+    <script type="module" src="/src/scripts/HeroTitleApp.jsx"></script>
+    <!-- Heavy 3D and React components are lazy-loaded in script.js -->
+</head>
+
+<body>
+
+    <!-- Intro Overlay -->
+    <div id="intro-overlay" class="intro-overlay" aria-hidden="true">
+        <video id="intro-video" class="intro-video" autoplay muted playsinline preload="auto">
+            <source src="assets/video/Loading 3.webm" type="video/webm">
+            <source src="assets/video/Loading 3.mp4" type="video/mp4">
+        </video>
+    </div>
+
+    <!-- Process Navigation (Mobile Only) -->
+    <div class="process-mobile-nav">
+        <button id="process-prev" class="nav-button nav-button--prev" aria-label="Previous process step">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+        </button>
+        <button id="process-next" class="nav-button nav-button--next" aria-label="Next process step">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+        </button>
+    </div>
+
+    <header class="header">
+        <nav class="navbar">
+            <div class="navbar-container">
+                <a href="#home" class="navbar-logo-link" aria-label="To Home Page"><img
+                        src="assets/image/XyZed_LOGO_NEWest.webp" class="navbar-logo" alt="XyZed logo" width="120"
+                        height="60" fetchpriority="high"></a>
+                <div class="hamburger" tabindex="0" role="button" aria-label="Toggle Navigation" aria-expanded="false">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+
+                <ul class="mobile-menu">
+                    <li><a href="/#home">Home</a></li>
+                    <li><a href="/#about">About</a></li>
+                    <li><a href="/#services">Services</a></li>
+                    <li><a href="/#process">Process</a></li>
+                    <li><a href="/#demo">Demo Reel</a></li>
+                    <li><a href="/#faq">FAQ</a></li>
+                    <li><a href="/shop/">Shop</a></li>
+                    <li><a href="/#contact">Contact</a></li>
+                </ul>
+
+                <div class="navbar-bar-bg">
+                    <ul class="navbar-menu">
+                        <li><a href="/#home">Home</a></li>
+                        <li><a href="/#about">About</a></li>
+                        <li><a href="/#services">Services</a></li>
+                        <li><a href="/#process">Process</a></li>
+                        <li><a href="/#demo">Demo Reel</a></li>
+                    </ul>
+
+                    <div class="navbar-side">
+                        <ul class="navbar-side-menu">
+                            <li><a href="/shop/" class="shop-link">Shop</a></li>
+                            <li><a href="/#faq" class="faq-link">FAQ</a></li>
+                            <li><a href="/#contact" class="contact-link">Contact</a></li>
+                        </ul>
+                    </div>
+                    <div class="navbar-social-slant">
+                        <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" class="social-icon"
+                            aria-label="YouTube"><i class="bxl bx-youtube"></i></a>
+                        <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="social-icon"
+                            aria-label="Instagram"><i class="bxl bx-instagram"></i></a>
+                        <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" class="social-icon"
+                            aria-label="Twitter (X)"><i class="bxl bx-twitter-x"></i></a>
+                    </div>
+
+                    <div class="header-divider"></div>
+                </div>
+            </div>
+        </nav>
+
+    </header>
+
+    <main class="stack-container">
+        <!-- 1. Regular Parallax: Hero + Main -->
+        <div class="reveal-group regular-parallax">
+            <!-- Anchor for Home to prevent sticky scrolling bug -->
+            <div id="home" style="position: absolute; top: 0; left: 0;"></div>
+
+            <!-- Hero Section -->
+            <section class="sticky-section hero-section">
+                <div class="video-background">
+                    <video autoplay muted loop playsinline preload="auto" fetchpriority="high" class="bg-video">
+                        <source src="assets/video/herovideo.webm" type="video/webm">
+                        <source src="assets/video/herovideo.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+                <!-- Demo Video -->
+                <video class="demo-video" playsinline loop preload="auto">
+                    <source src="assets/video/XyZed_Demo_Reel.mp4" type="video/mp4">
+                    <source src="assets/video/XyZed_Demo_Reel.webm" type="video/webm">
+                    Your browser does not support the video tag.
+                </video>
+                <div id="r3f-hero-canvas"
+                    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10;"></div>
+                <!-- Gradient Blur Overlay -->
+                <div class="hero-blur-overlay"></div>
+                <div class="content-wrapper">
+                    <div id="hero-title-root"></div>
+                    <div id="demo-button-root"></div>
+                </div>
+            </section>
+
+            <!-- Tagline (outside hero-section to avoid blur) -->
+            <div class="tagline-container">
+                <p class="tagline">Imagination, Brought to Life in XYZ</p>
+            </div>
+
+            <!-- Main Content Section (Covers Hero) -->
+            <section id="about" class="relative-section main-content-section">
+                <div class="video-background">
+                    <video autoplay muted loop playsinline preload="none" class="bg-video">
+                        <source src="assets/video/AboutUs.webm" type="video/webm">
+                        <source src="assets/video/AboutUs.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+                <div class="section-wrapper">
+                    <div class="section-header">
+                        <h2 class="section-title">ABOUT US</h2>
+                    </div>
+                    <div class="section-divider"></div>
+                    <div class="content-wrapper about-content-container">
+                        <div class="about-right tagline-box">
+                            <div class="about-taglines">
+                                <div class="about-tagline">Woven into every cell, DNA is the core of <span
+                                        class="tagline-red">CREATION</span></div>
+                                <div class="about-tagline">Science deciphers the code&hellip;Our <span
+                                        class="tagline-red">IMAGINATION</span> illuminates it</div>
+                                <div class="about-tagline">Turning strands of <span
+                                        class="tagline-red">POSSIBILITY</span> into worlds yet unseen</div>
+                            </div>
+                        </div>
+                        <div class="about-left text-block-wrapper">
+                            <h3 class="about-title">The Birth of a new studio</h3>
+                            <div class="about-text-container-wrapper">
+                                <div class="about-text-container bg-red">
+                                    <p class="about-text">Drawing on almost three decades of experience, XyZed was
+                                        founded to bring your stories to life through compelling 3D experiences. We
+                                        specialize in high-end medical animation, character animation, motion graphics,
+                                        VFX, and 3D illustration.</p>
+                                    <p class="about-text">At XyZed, we push the boundaries of visual storytelling,
+                                        transforming concepts into immersive experiences that educate, engage, and
+                                        inspire.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- 2. Services & Process (Blinds Transition) -->
+        <div class="reveal-group reverse-parallax blinds-stage" style="z-index: 40; height: 600vh;">
+            <div id="services" class="parallax-anchor"></div>
+            <div id="process" class="parallax-anchor" style="top: calc(100vh + 1600px);"></div>
+
+            <div class="blinds-layers sticky-section">
+                <!-- Services Section -->
+                <section class="blinds-layer services">
+                    <div class="video-background">
+                        <video autoplay muted loop playsinline preload="none" class="bg-video">
+                            <source src="assets/video/Services Bkg V2.webm" type="video/webm">
+                            <source src="assets/video/Services Bkg V2.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                    <div class="services-wrapper">
+                        <div class="services-header">
+                            <h2 class="services-title">OUR SERVICES</h2>
+                            <div class="services-tagline"></div>
+                        </div>
+                        <div class="services-divider"></div>
+
+                        <div class="cards-container stage">
+                            <button id="nav-prev" class="nav-button nav-button--prev" aria-label="Previous slide">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="15 18 9 12 15 6"></polyline>
+                                </svg>
+                            </button>
+                            <section class="cards" id="cards" aria-label="Services carousel">
+                                <article class="card">
+                                    <div class="slide-tab">MEDICAL ANIMATION</div>
+                                    <video autoplay loop muted playsinline class="card__img">
+                                        <source src="assets/video/MedicalAnimation.webm" type="video/webm">
+                                        <source src="assets/video/MedicalAnimation.mp4" type="video/mp4">
+                                        <img src="https://placehold.co/800x450/1a1a2e/ffffff?text=MEDICAL+ANIMATION"
+                                            class="card__img" alt="Medical Animation fallback">
+                                    </video>
+                                    <div class="card-desc">Precise, high-end visuals that simplify complex science and
+                                        communicate with clarity.</div>
+                                </article>
+                                <article class="card">
+                                    <div class="slide-tab">CHARACTER ANIMATION</div>
+                                    <video autoplay loop muted playsinline class="card__img">
+                                        <source src="assets/video/Character Red.webm" type="video/webm">
+                                        <source src="assets/video/Character Red.mp4" type="video/mp4">
+                                        <img src="https://placehold.co/800x450/2a1b38/ffffff?text=CHARACTER+ANIMATION"
+                                            alt="Character Animation" class="card__img">
+                                    </video>
+                                    <div class="card-desc">From quirky to realistic, our characters are full of
+                                        personality.</div>
+                                </article>
+                                <article class="card">
+                                    <div class="slide-tab">MOTION GRAPHICS</div>
+                                    <video autoplay loop muted playsinline class="card__img">
+                                        <source src="assets/video/MotionGraphics.webm" type="video/webm">
+                                        <source src="assets/video/MotionGraphics.mp4" type="video/mp4">
+                                        <img src="https://placehold.co/800x450/3a2b48/ffffff?text=MOTION+GRAPHICS"
+                                            class="card__img" alt="Motion Graphics fallback">
+                                    </video>
+                                    <div class="card-desc">Sleek, dynamic visuals that make any message pop.</div>
+                                </article>
+                                <article class="card">
+                                    <div class="slide-tab">3D ILLUSTRATION</div>
+                                    <video autoplay loop muted playsinline class="card__img">
+                                        <source src="assets/video/Illustration New.webm" type="video/webm">
+                                        <source src="assets/video/Illustration New.mp4" type="video/mp4">
+                                        <img src="https://placehold.co/800x450/6a5b78/ffffff?text=3D+ILLUSTRATION"
+                                            alt="3D Illustration" class="card__img">
+                                    </video>
+                                    <div class="card-desc">Bold, beautiful imagery built to grab attention in print or
+                                        digital.</div>
+                                </article>
+                                <article class="card">
+                                    <div class="slide-tab">PRODUCT ANIMATION</div>
+                                    <video autoplay loop muted playsinline class="card__img">
+                                        <source src="assets/video/Product.webm" type="video/webm">
+                                        <source src="assets/video/Product.mp4" type="video/mp4">
+                                        <img src="https://placehold.co/800x450/5a4b68/ffffff?text=PRODUCT+ANIMATION"
+                                            class="card__img" alt="Product Animation fallback">
+                                    </video>
+                                    <div class="card-desc">Show off your product like it's the star of its own
+                                        blockbuster.</div>
+                                </article>
+                                <article class="card">
+                                    <div class="slide-tab">VFX</div>
+                                    <video autoplay loop muted playsinline class="card__img">
+                                        <source src="assets/video/Vfx.webm" type="video/webm">
+                                        <source src="assets/video/VFX.mp4" type="video/mp4">
+                                        <img src="https://placehold.co/800x450/4a3b58/ffffff?text=VFX" class="card__img"
+                                            alt="VFX fallback">
+                                    </video>
+                                    <div class="card-desc">Add the wow-factor with effects that feel larger than life.
+                                    </div>
+                                </article>
+                            </section>
+                            <button id="nav-next" class="nav-button nav-button--next" aria-label="Next slide">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="9 18 15 12 9 6"></polyline>
+                                </svg>
+                            </button>
+                        </div>
+
+                        <div class="services-offer-box">
+                            <h3 class="offer-title">WHAT WE OFFER :</h3>
+                            <ul class="offer-list">
+                                <li><strong>MEDICAL ANIMATION</strong> — Precise, high-end visuals that simplify complex
+                                    science and communicate with clarity</li>
+                                <li><strong>CHARACTER ANIMATION</strong> — From quirky to realistic, our characters are
+                                    full
+                                    of personality</li>
+                                <li><strong>MOTION GRAPHICS</strong> — Sleek, dynamic visuals that make any message pop
+                                </li>
+                                <li><strong>3D ILLUSTRATION</strong> — Bold, beautiful imagery built to grab attention
+                                    in
+                                    print or digital</li>
+                                <li><strong>PRODUCT ANIMATION</strong> — Show off your product like it's the star of its
+                                    own
+                                    blockbuster</li>
+                                <li><strong>VFX</strong> — Add the wow-factor with effects that feel larger than life
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Process Section -->
+                <section class="blinds-layer process">
+                    <div class="video-background">
+                        <video autoplay muted loop playsinline preload="none" class="bg-video">
+                            <source src="assets/video/PROCESS.webm" type="video/webm">
+                            <source src="assets/video/PROCESS.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                    <div class="section-wrapper">
+                        <div class="section-header">
+                            <h2 class="section-title">OUR PROCESS</h2>
+                        </div>
+                        <div class="section-divider"></div>
+                        <div class="content-wrapper">
+                            <div class="process-scroll-container">
+                                <div class="process-arch-layout">
+                                    <div class="process-arch-text-column">
+                                        <div class="process-arch-text-block" id="process-step-1">
+                                            <div class="process-arch-content">
+                                                <h2 class="process-arch-heading">Pre-Production</h2>
+                                                <ul class="process-arch-description">
+                                                    <li><span>1. Information gathering</span> – We start by getting to
+                                                        know you, your goals and expectations, your audience, and the
+                                                        story you want to tell.</li>
+                                                    <li><span>2. Research</span> – Once we have a clear understanding of
+                                                        your story, we conduct research to ensure it is told in the most
+                                                        accurate and effective way.</li>
+                                                    <li><span>3. Scripting</span> – This foundational stage involves
+                                                        working closely with your team to research and write a script
+                                                        that communicates your story clearly and effectively.</li>
+                                                    <li><span>4. Modeling/texturing and lighting of 3D assets</span> –
+                                                        Once the script is approved, we begin creating the 3D assets
+                                                        needed to visualize your story. At this stage, we provide 3D
+                                                        model sheets for approval of the look and feel of all assets.
+                                                    </li>
+                                                    <li><span>5. Storyboards and Style Frames</span> – With your models
+                                                        ready, we sketch out the “roadmap” for your animation.
+                                                        Storyboards set the scene, while style frames capture the mood,
+                                                        colors, and cinematic style that will make your story stand out.
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+
+                                        <div class="process-arch-text-block" id="process-step-2">
+                                            <div class="process-arch-content">
+                                                <h2 class="process-arch-heading">Production</h2>
+                                                <ul class="process-arch-description">
+                                                    <li><span>6. First pass animation</span> – In this phase, your
+                                                        animation begins to take shape. We create a simplified version
+                                                        of the final product to establish timing, pacing, and narrative
+                                                        flow before committing to final rendering.</li>
+                                                    <li><span>7. Second pass animation</span> – This pass is a
+                                                        half-resolution render with all revisions from the first pass
+                                                        applied, providing a more refined preview of the final
+                                                        deliverable.</li>
+                                                </ul>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="process-arch-text-block" id="process-step-3">
+                                            <div class="process-arch-content">
+                                                <h2 class="process-arch-heading">Post-Production</h2>
+                                                <ul class="process-arch-description">
+                                                    <li><span>8. Final animation</span> – We refine and complete the
+                                                        details of the animation, adding final textures, lighting, and
+                                                        visual effects.</li>
+                                                    <li><span>9. Rendering</span> – All necessary layers are rendered
+                                                        for final compositing. This process can involve thousands of
+                                                        individual frames, taking anywhere from one minute to an hour
+                                                        per frame depending on complexity.</li>
+                                                    <li><span>10. Compositing</span> – During compositing, we enhance
+                                                        the animation with cinematic elements such as depth of field,
+                                                        highlights and glows, color correction, and text overlays. This
+                                                        stage also includes laying in professional sound design, music,
+                                                        and narration.</li>
+                                                    <li><span>11. Final output</span> – The completed animation is
+                                                        delivered in its final form—typically an HD or 4K master
+                                                        QuickTime ProRes file, along with a compressed H.265 MP4 file
+                                                        for easy distribution.</li>
+                                                </ul>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="process-arch-image-column">
+                                        <div class="process-arch-image-wrapper" data-index="3">
+                                            <img src="assets\image\STORYBOARD.webp" alt="Storyboard" loading="lazy"
+                                                decoding="async">
+                                        </div>
+
+                                        <div class="process-arch-image-wrapper" data-index="2">
+                                            <img src="assets\image\WIREFRAME_B.webp" alt="Wireframe" loading="lazy"
+                                                decoding="async">
+                                        </div>
+
+                                        <div class="process-arch-image-wrapper" data-index="1">
+                                            <img src="assets\image\RENDER.webp" alt="Render" loading="lazy"
+                                                decoding="async">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- SVG Mask Definition -->
+                <svg width="0" height="0" class="blinds-svg-defs" style="position: absolute; pointer-events: none;">
+                    <defs>
+                        <mask id="blinds-mask" maskContentUnits="objectBoundingBox">
+                            <g id="blinds-group"></g>
+                        </mask>
+                    </defs>
+                </svg>
+            </div>
+        </div>
+
+        <div class="reveal-group reverse-parallax" style="z-index: 20; height: 250vh;">
+            <div id="faq" class="parallax-anchor"></div>
+            <section class="sticky-section faq">
+                <div class="video-background">
+                    <video autoplay muted loop playsinline preload="none" class="bg-video">
+                        <source src="assets/video/FAQ.webm" type="video/webm">
+                        <source src="assets/video/FAQ.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+                <div class="section-wrapper">
+                    <div class="section-header">
+                        <h2 class="section-title">FAQs</h2>
+                    </div>
+                    <div class="section-divider"></div>
+                    <div class="content-wrapper">
+
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <div class="reveal-group reverse-parallax" style="z-index: 10; height: 250vh;">
+            <div id="contact" class="parallax-anchor"></div>
+            <section class="sticky-section contact">
+                <div class="video-background">
+                    <video autoplay muted loop playsinline preload="none" class="bg-video">
+                        <source src="assets/video/Contact Us.webm" type="video/webm">
+                        <source src="assets/video/Contact Us.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+                <div class="section-wrapper">
+                    <div class="section-header">
+                        <h2 class="section-title">CONTACT US</h2>
+                    </div>
+                    <div class="section-divider"></div>
+                    <div class="content-wrapper contact-content-container">
+                        <div class="contact-left">
+                            <div class="contact-card-container" id="r3f-contact-canvas"></div>
+                            <div class="contact-text-node">
+                                <p role="group">Every great project starts with a conversation. Whether it’s medical
+                                    animation,
+                                    motion graphics, or a bold new idea, we’re here to bring it into another dimension.
+                                </p>
+                                <p role="group"><span>Reach out to XyZed — Where stories move across every axis!</span>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="contact-right" id="contact-form-root">
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- 5. Footer -->
+    <footer class="site-footer">
+        <div id="footer-bg-root"></div>
+        <div class="footer-content">
+            <div class="footer-logo">
+                <img src="assets/image/XYZED_LOGO_NOTEXT.png" alt="XyZed logo mark" class="footer-logo-img" width="177"
+                    height="177">
+                <div class="footer-logo-divider"></div>
+                XyZed
+            </div>
+            <p class="footer-tagline">Imagination, Brought to Life in XYZ</p>
+
+            <div class="footer-links-grid">
+                <div class="footer-column">
+                    <h3>Navigation</h3>
+                    <ul>
+                        <li><a href="/#home">Home</a></li>
+                        <li><a href="/#about">About</a></li>
+                        <li><a href="/#services">Services</a></li>
+                        <li><a href="/#process">Process</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Explore</h3>
+                    <ul>
+                        <li><a href="/#demo">Demo Reel</a></li>
+                        <li><a href="/shop/">Shop</a></li>
+                        <li><a href="/#faq">FAQ</a></li>
+                        <li><a href="/#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Connect</h3>
+                    <ul>
+                        <li><a href="#" target="_blank" rel="noopener noreferrer">YouTube</a></li>
+                        <li><a href="#" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+                        <li><a href="#" target="_blank" rel="noopener noreferrer">X</a></li>
+                        <li><a href="mailto:MZ@XyZed.art">MZ@XyZed.art</a></li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 XyZed Animation Studio. All rights reserved.</p>
+            <p>Website built by <a href="https://nevenzurcher.com" target="_blank" rel="noopener noreferrer"
+                    class="footer-designer-link">Neven Zurcher</a></p>
+        </div>
+    </footer>
+
+
+    <script type="module" src="src/scripts/script.js"></script>
+</body>
+
+</html>
